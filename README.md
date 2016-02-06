@@ -1,4 +1,4 @@
-angular-cytoscape
+ngCytoscape
 =============
 
 A simple angular wrapper for the [Cytocape.js](http://js.cytoscape.org/) library.
@@ -8,8 +8,6 @@ Dependencies
 jQuery
 
 AngularJs
-
-Angular-Cytoscape
 
 ##Installation
 
@@ -91,7 +89,7 @@ $scope.graph.fit(); //Pan and zooms the graph to fit to a collection.
 ```
 #### Adding a removing nodes / edges
 Just push the node / edge object into your $scope.elements array.
-IMPORTANT: Edges must have target and source nodes already defined.  Make sure you add these nodes before adding edges.
+IMPORTANT: Edges must have target and source nodes already defined.  Make sure you add nodes before adding edges.
 
 #### Data Object
 The data property of nodes and edges are $watched.  Any changes to data will automatically updated in cytoscape.
