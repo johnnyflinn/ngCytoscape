@@ -14,9 +14,9 @@ AngularJs
 ```javascript
 <script src="pathToJquery/jquery.js"> 
 <script src="pathToAngular/angular.js">
-<script src="angular-cytoscape.js">
+<script src="ngCytoscape.js">
 ```
-Include `angular-cytoscape` as a dependency in your application.
+Include `ngCytoscape` as a dependency in your application.
 
 ##Basic Example
 HTML

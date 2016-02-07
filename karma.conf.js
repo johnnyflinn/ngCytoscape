@@ -9,10 +9,7 @@ module.exports = function(config){
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/cytoscape//dist/cytoscape.js',
       'src/directives/*.js',
-      'src/services/*.js',
-      'tests/directives/*.js'
-
-
+      'src/services/*.js'
     ],
 
     autoWatch : true,

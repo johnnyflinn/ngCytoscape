@@ -52,7 +52,7 @@
             'cxtdragout'// : when going off a node via cxtdrag
         ];
     }
-    function cytoEvents($rootScope, $timeout) {
+    function cytoEvents($rootScope) {
         var factory = {
             setEvents: setEvents
         };
@@ -64,9 +64,9 @@
                 cy.on(events[i],function(evt) {
                     if (evt.cyTarget === cy){
                         var graph = evt.cyTarget;
-                        $rootScope.$broadcast('cytoEvent:graph:' + evt.type, graph);
+                        $rootScope.$broadcast('cytoEvent:graph:' + evt.type, graph, evt);
                     }else{
-                        $rootScope.$broadcast('cytoEvent:core:' + evt.type, evt);
+                        $rootScope.$broadcast('cytoEvent:core:' + evt.type, core, evt);
                     }
                 });
                 cy.on(events[i], 'node', function (evt) {

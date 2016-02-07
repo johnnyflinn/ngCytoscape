@@ -1,5 +1,5 @@
 (function(){
-    'use strict';
+    "use strict";
     angular
         .module('ngCytoscape',[])
         .directive('cytoscape',cytoscape);
@@ -18,7 +18,7 @@
                 graphStyle: '='
             },
 
-            template: '<div class="angular-cytoscape"></div>',
+            template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
             link: linkFn
         };
@@ -90,7 +90,6 @@
         function linkFn(scope,elements,attrs,controller){
             var _scope = controller._getCytoscapeScope();
             var isDefined = cytoHelpers.isDefined;
-            var isEmpty = cytoHelpers.isEmpty;
             var graph;
             controller._getCytoscapeGraph().then(function(cy){
                 graph = cy;
@@ -99,13 +98,11 @@
             scope.$watchCollection(function(){
                 return _scope.graphElements;
             },function(nv,ov){
-                if(isDefined(nv) && nv != ov){
-                        cytoElementsHelpers.processChange(nv, ov, graph, _scope);
-                        graph.resize();
+                if(isDefined(nv) && nv !== ov){
+                    cytoElementsHelpers.processChange(nv, ov, graph, _scope);
+                    graph.resize();
                 }
             });
-
-
         }
     }
 })();
@@ -126,7 +123,9 @@
         function linkFn(scope,element,attrs,controller){
             var isDefined = cytoHelpers.isDefined;
             var defaultLayouts = cytoLayoutDefaults.getDefaultLayouts();
+            /* jshint ignore:start */
             var defaultLayout = defaultLayouts['grid'];
+            /* jshint ignore:end */
             var graph, _scope;
 
             _scope = controller._getCytoscapeScope();
@@ -167,12 +166,10 @@
                     if(nv !== ov){
                         graph.style(nv);
                     }
-                },true)
+                },true);
             }
         };
         return directive;
-
-
     }
 })();
 
@@ -432,7 +429,7 @@
             'cxtdragout'// : when going off a node via cxtdrag
         ];
     }
-    function cytoEvents($rootScope, $timeout) {
+    function cytoEvents($rootScope) {
         var factory = {
             setEvents: setEvents
         };
@@ -444,9 +441,9 @@
                 cy.on(events[i],function(evt) {
                     if (evt.cyTarget === cy){
                         var graph = evt.cyTarget;
-                        $rootScope.$broadcast('cytoEvent:graph:' + evt.type, graph);
+                        $rootScope.$broadcast('cytoEvent:graph:' + evt.type, graph, evt);
                     }else{
-                        $rootScope.$broadcast('cytoEvent:core:' + evt.type, evt);
+                        $rootScope.$broadcast('cytoEvent:core:' + evt.type, core, evt);
                     }
                 });
                 cy.on(events[i], 'node', function (evt) {

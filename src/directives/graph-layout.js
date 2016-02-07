@@ -15,7 +15,9 @@
         function linkFn(scope,element,attrs,controller){
             var isDefined = cytoHelpers.isDefined;
             var defaultLayouts = cytoLayoutDefaults.getDefaultLayouts();
+            /* jshint ignore:start */
             var defaultLayout = defaultLayouts['grid'];
+            /* jshint ignore:end */
             var graph, _scope;
 
             _scope = controller._getCytoscapeScope();

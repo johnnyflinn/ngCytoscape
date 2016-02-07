@@ -21,11 +21,9 @@
                     if(nv !== ov){
                         graph.style(nv);
                     }
-                },true)
+                },true);
             }
         };
         return directive;
-
-
     }
 })();

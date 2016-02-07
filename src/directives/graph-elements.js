@@ -16,7 +16,6 @@
         function linkFn(scope,elements,attrs,controller){
             var _scope = controller._getCytoscapeScope();
             var isDefined = cytoHelpers.isDefined;
-            var isEmpty = cytoHelpers.isEmpty;
             var graph;
             controller._getCytoscapeGraph().then(function(cy){
                 graph = cy;
@@ -25,13 +24,11 @@
             scope.$watchCollection(function(){
                 return _scope.graphElements;
             },function(nv,ov){
-                if(isDefined(nv) && nv != ov){
-                        cytoElementsHelpers.processChange(nv, ov, graph, _scope);
-                        graph.resize();
+                if(isDefined(nv) && nv !== ov){
+                    cytoElementsHelpers.processChange(nv, ov, graph, _scope);
+                    graph.resize();
                 }
             });
-
-
         }
     }
 })();

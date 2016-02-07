@@ -1,5 +1,5 @@
 (function(){
-    'use strict';
+    "use strict";
     angular
         .module('ngCytoscape',[])
         .directive('cytoscape',cytoscape);
@@ -18,7 +18,7 @@
                 graphStyle: '='
             },
 
-            template: '<div class="angular-cytoscape"></div>',
+            template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
             link: linkFn
         };
