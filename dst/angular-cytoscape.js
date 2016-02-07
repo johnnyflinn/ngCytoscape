@@ -109,9 +109,12 @@
     scope.$watch(function(){
         return scope.watchEles;
     },function(nv,ov){
-        if(nv !== ov)
+        if(nv !== ov) {
+            //graph.trigger('data');
+
             cytoElementsHelpers.processChange(_scope.graphElements,ov,graph,_scope);
             //cytoElementsHelpers.updateData(nv, ov, graph);
+        }
     },true);
 
     function CollectionMap(){
@@ -256,29 +259,35 @@
         var service = {
             initElements: _initElements,
             addElements: _addElements,
-            processChange:_processChange,
+            processChange: _processChange,
             updateData: _updateData
         };
         return service;
         function _initElements(elements, graph, scope) {
             //Add Elements To Graph
-            for(var i in elements){
+            for (var i in elements) {
                 var element = elements[i];
-                if(element.group === 'nodes' || element.group === 'edges'){
-                    _addElement(element,graph,scope);
+                if (element.group === 'nodes' || element.group === 'edges') {
+                    _addElement(element, graph, scope);
                 }
             }
         }
-        function _updateData(newVals, oldVals, graph){
-                var toAdd = [];
-                angular.forEach(oldVals, function(data,index){
-                    if(graph.elements('#'+data.id).data() !== data){
-                        graph.elements('#'+data.id).data(newVals[index])
 
-                    }
-                    //angular.merge(graph.elements('#'+data.id).data(), data);
-                })
+        function _updateData(newVals, oldVals, graph) {
+           /* for(i=0; i < oldVals.length; i++){
+                if(graph.elements('#'+ oldVals[i].id).data() !== oldVals[i].data){
+                    graph.elements('#' + oldVals[i].id).data(newVals[i])
+                }
+            }*/
+           angular.forEach(oldVals, function (data, index) {
+                if (graph.nodes('#' + data.id).data() !== data) {
+                    graph.nodes('#' + data.id).data(newVals[index])
+                }
+                //angular.merge(graph.elements('#'+data.id).data(), data);
+            })
         }
+
+
         function _processChange(newElements, oldElements, graph,scope){
             if(newElements.length === 0){
                 graph.nodes().forEach(function(ele){

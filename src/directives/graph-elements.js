@@ -35,9 +35,12 @@
     scope.$watch(function(){
         return scope.watchEles;
     },function(nv,ov){
-        if(nv !== ov)
+        if(nv !== ov) {
+            //graph.trigger('data');
+
             cytoElementsHelpers.processChange(_scope.graphElements,ov,graph,_scope);
             //cytoElementsHelpers.updateData(nv, ov, graph);
+        }
     },true);
 
     function CollectionMap(){
