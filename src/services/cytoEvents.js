@@ -66,7 +66,7 @@
                         var graph = evt.cyTarget;
                         $rootScope.$broadcast('cytoEvent:graph:' + evt.type, graph, evt);
                     }else{
-                        $rootScope.$broadcast('cytoEvent:core:' + evt.type, core, evt);
+                        $rootScope.$broadcast('cytoEvent:core:' + evt.type, evt);
                     }
                 });
                 cy.on(events[i], 'node', function (evt) {

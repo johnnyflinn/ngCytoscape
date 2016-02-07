@@ -94,15 +94,40 @@
             controller._getCytoscapeGraph().then(function(cy){
                 graph = cy;
             });
-
             scope.$watchCollection(function(){
                 return _scope.graphElements;
-            },function(nv,ov){
+            }, function(nv,ov){
                 if(isDefined(nv) && nv !== ov){
                     cytoElementsHelpers.processChange(nv, ov, graph, _scope);
-                    graph.resize();
                 }
             });
+
+    scope.watchEles = [];
+    scope.$watch(CollectionMap,function(nv,ov){
+            console.log('wattch collectionmap')
+    });
+    scope.$watch(function(){
+        return scope.watchEles;
+    },function(nv,ov){
+        if(nv !== ov)
+            cytoElementsHelpers.processChange(_scope.graphElements,ov,graph,_scope);
+            //cytoElementsHelpers.updateData(nv, ov, graph);
+    },true);
+
+    function CollectionMap(){
+        return angular.extend(scope.watchEles, _scope.graphElements.map(function(data){
+            return data.data
+        }));
+
+    }
+/*            scope.$watch(function(){
+
+            },function(nv,ov){
+                if(isDefined(nv)){
+                    cytoElementsHelpers.processChange(_scope.graphElements, ov, graph, _scope);
+                    graph.resize();
+                }
+            });*/
         }
     }
 })();
@@ -231,7 +256,8 @@
         var service = {
             initElements: _initElements,
             addElements: _addElements,
-            processChange:_processChange
+            processChange:_processChange,
+            updateData: _updateData
         };
         return service;
         function _initElements(elements, graph, scope) {
@@ -242,6 +268,16 @@
                     _addElement(element,graph,scope);
                 }
             }
+        }
+        function _updateData(newVals, oldVals, graph){
+                var toAdd = [];
+                angular.forEach(oldVals, function(data,index){
+                    if(graph.elements('#'+data.id).data() !== data){
+                        graph.elements('#'+data.id).data(newVals[index])
+
+                    }
+                    //angular.merge(graph.elements('#'+data.id).data(), data);
+                })
         }
         function _processChange(newElements, oldElements, graph,scope){
             if(newElements.length === 0){
@@ -271,11 +307,12 @@
                         }
                     }else{
                         //It's new
-                        toAdd.push(_addElement(ele,graph,scope));
+                        toAdd.push((ele));
                     }
                     //No ID.  Add It
                 }else{
-                    toAdd.push(_addElement(ele,graph,scope));
+                    toAdd.push((ele));
+
                 }
             }).then(function(){
                     if(toAdd.length === 0){
@@ -305,28 +342,9 @@
         }
         function _addElements(elements, graph, _scope){
             if(areValidElements(elements)){
-                cytoHelpers.asyncEach(elements, function(ele,index){
-                    if(ele.group === 'nodes'){
-                        _addElement(ele, graph, _scope);
-                    }else if(ele.group === 'edges'){
-                        _addElement(ele, graph, _scope);
-                    }
-                }).then(function() {
                     graph.add(elements);
                     graph.elements(':visible').layout(_scope.graphLayout || {name: 'cose'});
-                });
             }
-        }
-        function _addElement(element,graph,scope){
-            scope.$watch(function(){
-                return element.data;
-            },function(nv,ov){
-                if(nv !== ov){
-                    var id = graph.getElementById(element.data.id);
-                    id.data(nv);
-                }
-            },true);
-            return element;
         }
         function areValidElements(nv){
             var nodeIndex = {};
@@ -443,7 +461,7 @@
                         var graph = evt.cyTarget;
                         $rootScope.$broadcast('cytoEvent:graph:' + evt.type, graph, evt);
                     }else{
-                        $rootScope.$broadcast('cytoEvent:core:' + evt.type, core, evt);
+                        $rootScope.$broadcast('cytoEvent:core:' + evt.type, evt);
                     }
                 });
                 cy.on(events[i], 'node', function (evt) {
