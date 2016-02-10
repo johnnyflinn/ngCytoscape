@@ -107,7 +107,7 @@
             }
 
             function _addElement(element){
-               scope.$watchCollection(function(){
+              /* scope.$watchCollection(function(){
                     return element.data
                 },function(nv,ov){
                    console.log('fired')
@@ -115,7 +115,7 @@
                         var id = graph.getElementById(nv.id);
                         id.data(nv);
                     }
-                });
+                });*/
                 return element;
             }
             function areValidElements(nv){
