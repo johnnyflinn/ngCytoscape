@@ -12,7 +12,6 @@ AngularJs
 ##Installation
 
 ```javascript
-<script src="pathToJquery/jquery.js"> 
 <script src="pathToAngular/angular.js">
 <script src="ngCytoscape.js">
 ```
