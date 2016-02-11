@@ -435,18 +435,18 @@
                 cy.on(events[i],function(evt) {
                     if (evt.cyTarget === cy){
                         var graph = evt.cyTarget;
-                        $rootScope.$broadcast('cytoEvent:graph:' + evt.type, graph, evt);
+                        $rootScope.$broadcast('cy:graph:' + evt.type, evt);
                     }else{
-                        $rootScope.$broadcast('cytoEvent:core:' + evt.type, evt);
+                        $rootScope.$broadcast('cy:core:' + evt.type, evt);
                     }
                 });
                 cy.on(events[i], 'node', function (evt) {
-                    var node = evt.cyTarget;
-                    $rootScope.$broadcast('cytoEvent:node:' + evt.type, node, evt);
+
+                    $rootScope.$broadcast('cy:node:' + evt.type, evt);
                 });
                 cy.on(events[i], 'edge', function (evt) {
                     var edge = evt.cyTarget;
-                    $rootScope.$broadcast('cytoEvent:edge:' + evt.type, edge, evt);
+                    $rootScope.$broadcast('cy:edge:' + evt.type, evt);
                 });
             }
         }

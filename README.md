@@ -95,13 +95,14 @@ The data property of nodes and edges are $watched.  Any changes to data will aut
 
 #### Events
 See <a href="http://js.cytoscape.org/#events"> cytoscape library</a> for more information.
-* `cytoEvent:edge:event` Edge Events.
-* `cytoEvent:node:event` Node Events.
-* `cytoEvent:core:event` Core Events.
-* `cytoEvent:core:event` Graph Events.
+* `cy:edge` Edge Events.
+* `cy:node` Node Events.
+* `cy:core` Core Events.
+* `cy:core` Graph Events.
 
 ```javascript
-$scope.$on('cytoEvent:node:select', function(node){
+$scope.$on('cy:node:click', function(ng,cy){
+    var node = cy.cyTarget;
     console.log(node.data())
-})
+});
 ```
