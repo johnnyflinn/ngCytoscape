@@ -21,14 +21,14 @@
                 }
             }
         }
-        function _processChange(newElements, oldElements, graph,scope) {
+        function _processChange(newElements, graph, _scope) {
             if (newElements.length === 0) {
                 graph.nodes().forEach(function (ele) {
                     graph.remove(ele);
                 });
             }
             if (graph.elements().length === 0) {
-                _addElements(newElements, graph, scope);
+                _addElements(newElements, graph, _scope);
 
             } else {
                 var graphIndex = {};
@@ -39,7 +39,7 @@
                 //To Add
                 var toAdd = [];
                 cytoHelpers.asyncEach(newElements, function (ele, index) {
-                    console.log('asyncStarted')
+
                     newElementIndex[ele.data.id] = ele.data.id;
                     if (ele.data && ele.data.id) {
                         if (graphIndex[ele.data.id]) {
@@ -50,11 +50,11 @@
                             }
                         } else {
                             //It's new
-                            toAdd.push(_addElement(ele, graph, scope));
+                            toAdd.push(ele);
                         }
                         //No ID.  Add It
                     } else {
-                        toAdd.push(_addElement(ele, graph, scope));
+                        toAdd.push(ele);
                     }
                 }).then(function () {
                     if (toAdd.length === 0) {
@@ -77,34 +77,17 @@
                     } else {
                         graph.add(toAdd);
                     }
-
                     graph.style().update();
+                    graph.elements(':visible').layout(_scope.graphLayout || {name: 'grid'});
                     graph.resize();
                 });
             }
         }
-        function _addElements(elements, graph, _scope){
+        function _addElements(elements,graph,_scope){
             if(areValidElements(elements)){
-                cytoHelpers.asyncEach(elements, function(ele,index){
-                    if(ele.group === 'nodes'){
-                        _addElement(ele, graph, _scope);
-                    }else if(ele.group === 'edges'){
-                        _addElement(ele, graph, _scope);
-                    }
-                }).then(function() {
-                    graph.add(elements);
-                    graph.elements(':visible').layout(_scope.graphLayout || {name: 'cose'});
-                });
+                graph.add(elements);
+                graph.elements(':visible').layout(_scope.graphLayout || {name: 'grid'});
             }
-        }
-        function _addElement(element,graph,scope){
-            scope.$parent.$watch(element.data.rank,function(nv,ov){
-                if(nv !== ov) {
-                    var id = graph.getElementById(nv.id);
-                    id.data(nv);
-                }
-            },true);
-            return element;
         }
         function areValidElements(nv){
             var nodeIndex = {};
@@ -128,19 +111,19 @@
                 if(ele.group !== 'nodes'){
                     if(!ele.data.hasOwnProperty('target')){
                         errors ++;
-                        $log.error('Edges require a target');
+                        $log.error('Edges require a target', ele.data);
                     }
                     if(!ele.data.hasOwnProperty('target')){
                         errors ++;
-                        $log.error('Edges require a target');
+                        $log.error('Edges require a target', ele.data);
                     }
                     if(!nodeIndex[ele.data.target]){
                         errors ++;
-                        $log.error('Edges require a target node.');
+                        $log.error('Edges require a target node.', ele.data);
                     }
                     if(!nodeIndex[ele.data.source]){
                         errors ++;
-                        $log.error('Edges require a source node.');
+                        $log.error('Edges require a source node.', ele.data);
                     }
                 }
             });
