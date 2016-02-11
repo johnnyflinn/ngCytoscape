@@ -121,14 +121,17 @@
                 newDefaults.motionBlurOpacity = isDefined(userDefaults.motionBlurOpacity) ? userDefaults.motionBlurOpacity : newDefaults.motionBlurOpacity;
                 newDefaults.wheelSensitivity = isDefined(userDefaults.wheelSensitivity) ? userDefaults.wheelSensitivity : newDefaults.wheelSensitivity;
                 newDefaults.pixelRatio = isDefined(userDefaults.pixelRatio) ? userDefaults.pixelRatio : newDefaults.pixelRatio;
-                newDefaults.style = isDefined(userStyle) ? userStyle : [];
-                newDefaults.layout = isDefined(userLayout) ? userLayout : {};
-
 
                 if (isDefined(userDefaults.pan)) {
                     angular.extend(newDefaults.pan, userDefaults.pan);
                 }
 
+            }
+            if(isDefined(userStyle)){
+                newDefaults.style = isDefined(userStyle) ? userStyle : [];
+            }
+            if(isDefined(userLayout)){
+                newDefaults.layout = isDefined(userLayout) ? userLayout : {name:'grid'};
             }
 
             var graphId = obtainEffectiveGraphId(defaults, scopeId);
