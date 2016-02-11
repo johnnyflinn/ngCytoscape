@@ -5,14 +5,14 @@ A simple angular wrapper for the [Cytocape.js](http://js.cytoscape.org/) library
 
 Dependencies
 -----------
-jQuery
-
 AngularJs
+Cytoscape.js
 
 ##Installation
 
 ```javascript
 <script src="pathToAngular/angular.js">
+<script src="pathToAngular/cytoscape.js">
 <script src="ngCytoscape.js">
 ```
 Include `ngCytoscape` as a dependency in your application.
