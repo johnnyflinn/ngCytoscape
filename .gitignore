@@ -1,6 +1,7 @@
 logs/*
 !.gitkeep
 node_modules/
+bower_components/
 demo/
 tmp
 .DS_Store
