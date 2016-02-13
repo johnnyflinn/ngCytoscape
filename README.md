@@ -12,7 +12,7 @@ Cytoscape.js
 
 ```javascript
 <script src="pathToAngular/angular.js">
-<script src="pathToAngular/cytoscape.js">
+<script src="pathToCytoscape/cytoscape.js">
 <script src="ngCytoscape.js">
 ```
 Include `ngCytoscape` as a dependency in your application.

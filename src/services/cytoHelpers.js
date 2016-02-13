@@ -15,7 +15,7 @@
             var i;
             if (!angular.isDefined(graphId)) {
                 if (Object.keys(d).length === 0) {
-                    id = 'cytoscape-main';
+                    id = 'ngCyMain';
                 } else if (Object.keys(d).length >= 1) {
                     for (i in d) {
                         if (d.hasOwnProperty(i)) {
@@ -40,7 +40,7 @@
                 defer = $q.defer();
                 d[id] = {
                     defer: defer,
-                    resolvedDefer: false,
+                    resolvedDefer: false
                 };
             } else {
                 defer = d[id].defer;

@@ -17,7 +17,6 @@
                 graphOptions: '=',
                 graphStyle: '='
             },
-
             template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
             link: linkFn

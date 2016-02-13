@@ -23,9 +23,9 @@ gulp.task('scripts', function() {
         'src/directives/graph-layout.js',
         'src/directives/graph-style.js',
         'src/services/*.js'])
-        .pipe(concat('angular-cytoscape.js'))
+        .pipe(concat('ngCytoscape.js'))
         .pipe(gulp.dest('dst'))
-        .pipe(rename('angular-cytoscape.min.js'))
+        .pipe(rename('ngCytoscape.min.js'))
         .pipe(uglify())
 
         .pipe(gulp.dest('dst'));
