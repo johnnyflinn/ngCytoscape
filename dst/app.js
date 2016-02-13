@@ -61,9 +61,7 @@
         var runLayouts;
         runLayouts = $interval(function(){
             var ran = Math.floor(Math.random() * 4);
-
             $scope.layout = layouts[ran];
-
         },10000);
          $scope.style =[
          {
