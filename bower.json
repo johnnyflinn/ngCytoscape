@@ -1,8 +1,8 @@
 {
   "name": "ngCytoscape",
   "description": "An AngularJS directive for cytoscape.js",
-  "version": "0.1.0",
-  "homepage": "https://github.com/johnny-flinn/ngCytoscape",
+  "version": "1.0.0",
+  "homepage": "https://github.com/johnnyflinn/ngCytoscape",
   "license": "MIT",
   "private": true,
   "dependencies": {
