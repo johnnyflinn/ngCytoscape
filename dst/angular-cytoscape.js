@@ -102,7 +102,9 @@
                 }
             });
 
-            scope.$watch(watchNodeList, function () {
+            scope.$watch(watchNodeList, function (nv) {
+                if(nv && nv.length > 0)
+                if(graph)
                 graph.style().update();
             },true);
             function watchNodeList() {
@@ -175,6 +177,7 @@
                     return _scope.graphStyle;
                 }, function(nv,ov){
                     if(nv !== ov){
+                        if(graph)
                         graph.style(nv);
                     }
                 },true);
@@ -582,12 +585,11 @@
                 }
 
             }
-            if(isDefined(userStyle)){
-                newDefaults.style = isDefined(userStyle) ? userStyle : [];
-            }
-            if(isDefined(userLayout)){
-                newDefaults.layout = isDefined(userLayout) ? userLayout : {name:'grid'};
-            }
+
+            newDefaults.style = isDefined(userStyle) ? userStyle : {};
+
+            newDefaults.layout = isDefined(userLayout) ? userLayout : {name:'grid'};
+
 
             var graphId = obtainEffectiveGraphId(defaults, scopeId);
             defaults[graphId] = newDefaults;

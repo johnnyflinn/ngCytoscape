@@ -28,7 +28,9 @@
                 }
             });
 
-            scope.$watch(watchNodeList, function () {
+            scope.$watch(watchNodeList, function (nv) {
+                if(nv && nv.length > 0)
+                if(graph)
                 graph.style().update();
             },true);
             function watchNodeList() {

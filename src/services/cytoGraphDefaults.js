@@ -127,12 +127,11 @@
                 }
 
             }
-            if(isDefined(userStyle)){
-                newDefaults.style = isDefined(userStyle) ? userStyle : [];
-            }
-            if(isDefined(userLayout)){
-                newDefaults.layout = isDefined(userLayout) ? userLayout : {name:'grid'};
-            }
+
+            newDefaults.style = isDefined(userStyle) ? userStyle : {};
+
+            newDefaults.layout = isDefined(userLayout) ? userLayout : {name:'grid'};
+
 
             var graphId = obtainEffectiveGraphId(defaults, scopeId);
             defaults[graphId] = newDefaults;

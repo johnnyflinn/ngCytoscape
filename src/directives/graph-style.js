@@ -19,6 +19,7 @@
                     return _scope.graphStyle;
                 }, function(nv,ov){
                     if(nv !== ov){
+                        if(graph)
                         graph.style(nv);
                     }
                 },true);
