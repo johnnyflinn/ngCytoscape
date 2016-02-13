@@ -17,7 +17,6 @@
                 graphOptions: '=',
                 graphStyle: '='
             },
-
             template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
             link: linkFn
@@ -349,9 +348,9 @@
                         errors ++;
                         $log.error('Edges require a target', ele.data);
                     }
-                    if(!ele.data.hasOwnProperty('target')){
+                    if(!ele.data.hasOwnProperty('source')){
                         errors ++;
-                        $log.error('Edges require a target', ele.data);
+                        $log.error('Edges require a source', ele.data);
                     }
                     if(!nodeIndex[ele.data.target]){
                         errors ++;
@@ -615,7 +614,7 @@
             var i;
             if (!angular.isDefined(graphId)) {
                 if (Object.keys(d).length === 0) {
-                    id = 'cytoscape-main';
+                    id = 'ngCyMain';
                 } else if (Object.keys(d).length >= 1) {
                     for (i in d) {
                         if (d.hasOwnProperty(i)) {
@@ -640,7 +639,7 @@
                 defer = $q.defer();
                 d[id] = {
                     defer: defer,
-                    resolvedDefer: false,
+                    resolvedDefer: false
                 };
             } else {
                 defer = d[id].defer;
