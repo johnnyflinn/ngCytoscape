@@ -3,6 +3,10 @@ ngCytoscape
 
 A simple angular wrapper for the [Cytocape.js](http://js.cytoscape.org/) library.
 
+Demos
+-----------
+Visit the [Demo Page](http://johnnyflinn.github.io/ngCytoscape) for detailed set-up and usage.
+
 Dependencies
 -----------
 AngularJs
@@ -53,9 +57,8 @@ Controller
     { // edge e1
      data: {
       id: 'e1',
-    // inferred as an edge because `source` and `target` are specified:
-       source: 'n1', // the source node id (edge comes from this node)
-       target: 'n2'  // the target node id (edge goes to this node)
+      source: 'n1', // the source node id (edge comes from this node)
+      target: 'n2'  // the target node id (edge goes to this node)
      }
     }
     ]
