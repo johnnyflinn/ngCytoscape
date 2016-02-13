@@ -21,14 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * angular-leaflet-directive
- * https://github.com/tombatossals/angular-leaflet-directive
- *
- * @authors https://github.com/tombatossals/angular-leaflet-directive/graphs/contributors
  */
 
 /*!
- *  ngCytoscape  2016-02-13
+ *  ngCytoscape v1.0  2016-02-13
  *  ngCytoscape - An AngularJS directive to easily interact with cytoscape
  *  git: https://github.com/johnnyflinn/ngCytoscape
  */
