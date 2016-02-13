@@ -1,15 +1,29 @@
 {
   "name": "ngCytoscape",
-  "description": "An AngularJS directive for cytoscape.js",
-  "version": "1.0.0",
+  "description": "Angular directive for cytoscapejs",
+  "main": "ngCytoscape.js",
+  "authors": [
+    "Johnny Flinn <johnny.flinn@cox.net>"
+  ],
+  "license": "MTT",
+  "keywords": [
+    "angular",
+    "cytoscape"
+  ],
   "homepage": "https://github.com/johnnyflinn/ngCytoscape",
-  "license": "MIT",
-  "private": true,
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
-    "angular": "~1.4.0",
     "angular-loader": "~1.4.0",
     "angular-mocks": "~1.4.0",
     "angular-route": "~1.4.0",
-    "cytoscape": "~2.6.1"
+    "cytoscape": "~2.6.1",
+    "angular": "angularjs#~1.5.0"
   }
 }
