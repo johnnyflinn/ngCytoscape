@@ -113,9 +113,9 @@
                         errors ++;
                         $log.error('Edges require a target', ele.data);
                     }
-                    if(!ele.data.hasOwnProperty('target')){
+                    if(!ele.data.hasOwnProperty('source')){
                         errors ++;
-                        $log.error('Edges require a target', ele.data);
+                        $log.error('Edges require a source', ele.data);
                     }
                     if(!nodeIndex[ele.data.target]){
                         errors ++;
