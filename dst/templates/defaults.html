@@ -1,0 +1,26 @@
+<h3>Default Options</h3>
+<div class="cy-examples well">
+    <cytoscape graph-options="defaults" graph-elements="elements" id="defaults-graph"></cytoscape>
+</div>
+<span class="col-md-12">
+    <p class="text-warning">Panning and zooming disabled.</p>
+   </span>
+<div class="btn-group">
+    <button class="btn btn-raised btn-primary" ng-click="switch('HTML')">HTML</button>
+    <button class="btn btn-raised btn-primary" ng-click="switch('JAVASCIRPT')">JAVASCRIPT</button>
+</div>
+ <div hljs ng-show="codeView.html">
+     <cytoscape graph-options="defaults" graph-elements="elements"></cytoscape>
+ </div>
+<div hljs ng-show="codeView.javascript">
+    $scope.defaults = {
+        zoomingEnabled: false,
+        panningEnabled: false,
+    };
+    $scope.elements = [
+        { group:'nodes',data: { id: 'ngCyto', name: 'ngCytoscape'} },
+        { group:'nodes',data: { id: 'cyto', name: 'Cytoscape.js'} },
+        { group:'nodes',data: { id: 'ng', name: 'Angular.js'} },
+        { group:'edges',data: { id: 'ngToNgCyto', source:'ngCyto', target:'ng' }},
+        { group:'edges',data: { id: 'cytoToNgCyto', source:'ngCyto', target:'cyto' }}
+    ];</div>

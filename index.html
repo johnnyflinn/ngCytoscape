@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.css">
+    <link rel="stylesheet" href="dst/app.css">
+    <style>
+        .ngCytoscape{
+            height: 100%;
+            width: 100%
+        }
+        .forkme > img {
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: 0;
+            z-index: 1040;
+        }
+    </style>
+</head>
+<body ng-app="app">
+<div class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://github.com/johnny-flinn/ngCytoscape">ngCytoscape</a>
+        </div>
+    </div>
+</div>
+<div ng-controller="appCntrl">
+
+
+    <div class="container">
+        <div class="jumbotron" style="height:250px; position:relative">
+            <cytoscape graph-elements="elements" graph-layout="{name:'cose'}" graph-style="style" id="jumbo-graph"></cytoscape>
+            <a class="forkme" href="https://github.com/johnny-flinn/ngCytoscape" rel="external">
+                <img src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub">
+            </a>
+        </div>
+        <div class="col-md-12 bs-callout bs-callout-info">
+            This directive embeds the Cytoscape.js library and interact with it through Angular $scope and the Cytoscape.js api.
+            It is by no means an all encompassing library, but it does provide the majority of the functionality found in the amazing Cytoscape library.  This was a personal project
+            to learn more about angular,github, and cytoscape.
+        </div>
+    </div>
+<div class="container">
+    <div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+            <button type="button" class="btn btn-block btn-primary" ui-sref="gettingStarted">Getting Started</button>
+            <button type="button" class="btn btn-block btn-primary" ui-sref="defaults">Defaults</button>
+            <button type="button" class="btn btn-block btn-primary">Elements</button>
+            <button type="button" class="btn btn-block btn-primary">Layouts</button>
+            <button type="button" class="btn btn-block btn-primary">Styles</button>
+            <button type="button" class="btn btn-block btn-primary">Core Functionality</button>
+            <button type="button" class="btn btn-block btn-primary">Events</button>
+            <button type="button" class="btn btn-block btn-primary">Multiple Instance</button>
+            <button type="button" class="btn btn-block btn-primary">Showcase</button>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div ui-view></div>
+    </div>
+</div>
+    </div>
+    </div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/cytoscape/dist/cytoscape.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+<script src="dst/app.js"></script>
+<script src="dst/libs/ngCytoscape.js"></script>
+<script src="bower_components/angular-highlightjs/angular-highlightjs.js"></script>
+<!--<script src="src/config/hljs-config.js"></script>-->
+</body>
+</html>

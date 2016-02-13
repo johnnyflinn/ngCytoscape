@@ -1,0 +1,34 @@
+<h3>Getting Started</h3>
+<p class="text-info">Dependencies</p>
+<ul>
+    <li>
+        <div hljs>
+        bower install angularjs
+        </div>
+    </li>
+    <li>
+        <div hljs>
+        bower install cytoscape
+            </div>
+    </li>
+</ul>
+
+<div hljs>
+    <script src="pathToAngular/angular.js"></script>
+    <script src="pathToCytoscape/cytoscape.js"></script>
+    <script src="ngCytoscape.js"></script>
+</div>
+<p class="text-info">Include</p>
+
+<div hljs>
+   angular
+        .module('yourApp', ['ngCytoscape'];
+</div>
+<p class="text-info">CSS</p>
+Cytoscape requires a specified height width.
+<div hljs>
+.ngCytoscape{
+    height: 300px;
+    width:100%;
+}
+</div>
