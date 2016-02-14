@@ -49,7 +49,7 @@ Controller
      data:{} //Data property mandatory for all elements
     },
     n2:{
-     group: 'nodes,
+     group: 'nodes',
      data:{}
     }
     e1:{
