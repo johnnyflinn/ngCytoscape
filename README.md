@@ -24,7 +24,7 @@ Include `ngCytoscape` as a dependency in your application.
 ##Basic Example
 HTML
 ```javascript
- <cytoscape graph-options="defaults" graph-elements="elements" graph-layout="layout" graph-style="style"></cytoscape>
+ <cytoscape graph-options="options" graph-elements="elements" graph-layout="layout" graph-style="style"></cytoscape>
 ```
 Controller
 ```javascript
@@ -34,15 +34,15 @@ Controller
   .controller('example');
   example.$inject = ['$scope', 'cytoData']
   function example($scope, cytoData){
-   $scope.defaults = {
+   $scope.options = { //See http://js.cytoscape.org/#core/initialisation for core options
     textureOnViewport:true,
     pixelRatio: 'auto',
     motionBlur: false,
     hideEdgesOnViewport:true
    };
-   //See http://js.cytoscape.org/#collection/layout for available layouts and options
-   $scope.layout = {name: 'grid'}
-   // See http://js.cytoscape.org/#notation/elements-json for element array format
+ 
+   $scope.layout = {name: 'grid'}   //See http://js.cytoscape.org/#collection/layout for available layouts and options
+   
    $scope.elements = {
     n1:{
      group: 'nodes',
@@ -60,7 +60,7 @@ Controller
      }
     }
    }
-    $scope.style = [
+    $scope.style = [ // See http://js.cytoscape.org/#style for style formatting and options.
       {
             selector: 'node',
             style: {
