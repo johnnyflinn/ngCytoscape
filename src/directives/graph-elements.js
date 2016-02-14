@@ -20,28 +20,23 @@
             controller._getCytoscapeGraph().then(function(cy){
                 graph = cy;
             });
-            scope.$watchCollection(function(){
-                return _scope.graphElements;
+            scope.$watch(function(){
+                return _scope.graphElements
             }, function(nv,ov){
                 if(isDefined(nv) && nv !== ov){
-                    cytoElementsHelpers.processChange(nv,graph,_scope);
+                    cytoElementsHelpers.processChange(nv, ov, graph,_scope);
                 }
-            });
-
-            scope.$watch(watchNodeList, function (nv) {
-                if(nv && nv.length > 0)
-                if(graph)
-                graph.style().update();
             },true);
-            function watchNodeList() {
-                return scope.elements.map(nodeMap);
+            scope.$watch(dataMap,function(nv,ov){
+                if(nv.length !== 0 && nv !== ov){
+                    if(graph){
+                        graph.style().update()
+                    }
+                }
+            },true);
+            function dataMap(){
+                return Object.keys(_scope.graphElements).map(function(key){return _scope.graphElements[key].data})
             }
-            function nodeMap (node) {
-                return node.data;
-            }
-
-
-
         }
     }
 })();

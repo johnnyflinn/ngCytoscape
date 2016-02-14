@@ -72,7 +72,7 @@
             ctrlFn._cytoGraph.resolve(cy);
 
             if(isDefined(scope.graphElements && !isEmpty(scope.graphElements))){
-                cytoElementsHelpers.addElements(scope.graphElements, cy, scope);
+                cytoElementsHelpers.addAllElements(scope.graphElements, cy, scope);
                 if(isDefined(scope.graphLayout) && !isEmpty(scope.graphLayout)){
                     cy.layout(scope.graphLayout);
                 }
