@@ -43,25 +43,23 @@ Controller
    //See http://js.cytoscape.org/#collection/layout for available layouts and options
    $scope.layout = {name: 'grid'}
    // See http://js.cytoscape.org/#notation/elements-json for element array format
-   $scope.elements = [
-    { 
-     group: 'nodes', // 'nodes' for a node, 'edges' for an edge
-     data: { 
-      id: 'n1', // mandatory for each element, assigned automatically on undefined
-     },
-    { 
-     group: 'nodes', 
-      data: { 
-       id: 'n2', 
+   $scope.elements = {
+    n1:{
+     group: 'nodes',
+     data:{} //Data property mandatory for all elements
     },
-    { // edge e1
-     data: {
-      id: 'e1',
-      source: 'n1', // the source node id (edge comes from this node)
-      target: 'n2'  // the target node id (edge goes to this node)
+    n2:{
+     group: 'nodes,
+     data:{}
+    }
+    e1:{
+     group:'edges',
+     data:{
+      target: n1,  //Source and Target mandatory for edges.
+      source: n2
      }
     }
-    ]
+   }
     $scope.style = [
       {
             selector: 'node',
@@ -77,12 +75,12 @@ Controller
 ```
 
 #### cytoscape instance
-Obtain the cytoscape graph core by making a call to cytoData.getGraph().  This will return a promise with the graph instance.
+Obtain the cytoscape graph core by making a call to cytoData.getGraph().  This will return a promise with the graph instance.  If you have multiple graphs, they must contain an id property.  Then you can pass the id to cytoData.getGraph('id') to obtain the corresponding graph instance.
 ```javascript
+//Single Graph Instance
 $scope.graph = {};
-
-cytoData.getGraph().then(function(cytoGraph){
- $scope.graph = cytoGraph;
+cytoData.getGraph().then(function(graph){
+ $scope.graph = graph
 })
 ```
 Now all core functionality is available on $scope.graph
@@ -90,8 +88,7 @@ Now all core functionality is available on $scope.graph
 $scope.graph.fit(); //Pan and zooms the graph to fit to a collection.
 ```
 #### Adding a removing nodes / edges
-Just push the node / edge object into your $scope.elements array.
-IMPORTANT: Edges must have target and source nodes already defined.  Make sure you add nodes before adding edges.
+Just extend the node / edge object onto your $scope.elements object.  Removing a node WILL remove it's connected edges from the graph, but WILL NOT remove them from your $scope.elements object.  
 
 #### Data Object
 The data property of nodes and edges are $watched.  Any changes to data will automatically updated in cytoscape.
