@@ -1,3 +1,32 @@
+/**!
+ * The MIT License
+ *
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ */
+
+/*!
+ *  ngCytoscape v1.0  2016-02-13
+ *  ngCytoscape - An AngularJS directive to easily interact with cytoscape
+ *  git: https://github.com/johnnyflinn/ngCytoscape
+ */
 (function(){
     "use strict";
     angular
@@ -43,7 +72,7 @@
             ctrlFn._cytoGraph.resolve(cy);
 
             if(isDefined(scope.graphElements && !isEmpty(scope.graphElements))){
-                cytoElementsHelpers.addElements(scope.graphElements, cy, scope);
+                cytoElementsHelpers.addAllElements(scope.graphElements, cy, scope);
                 if(isDefined(scope.graphLayout) && !isEmpty(scope.graphLayout)){
                     cy.layout(scope.graphLayout);
                 }
@@ -93,28 +122,23 @@
             controller._getCytoscapeGraph().then(function(cy){
                 graph = cy;
             });
-            scope.$watchCollection(function(){
-                return _scope.graphElements;
+            scope.$watch(function(){
+                return _scope.graphElements
             }, function(nv,ov){
                 if(isDefined(nv) && nv !== ov){
-                    cytoElementsHelpers.processChange(nv,graph,_scope);
+                    cytoElementsHelpers.processChange(nv, ov, graph,_scope);
                 }
-            });
-
-            scope.$watch(watchNodeList, function (nv) {
-                if(nv && nv.length > 0)
-                if(graph)
-                graph.style().update();
             },true);
-            function watchNodeList() {
-                return scope.elements.map(nodeMap);
+            scope.$watch(dataMap,function(nv,ov){
+                if(nv.length !== 0 && nv !== ov){
+                    if(graph){
+                        graph.style().update()
+                    }
+                }
+            },true);
+            function dataMap(){
+                return Object.keys(_scope.graphElements).map(function(key){return _scope.graphElements[key].data})
             }
-            function nodeMap (node) {
-                return node.data;
-            }
-
-
-
         }
     }
 })();
@@ -242,133 +266,112 @@
     cytoElementsHelpers.$inject = ['cytoHelpers', '$log'];
     function cytoElementsHelpers(cytoHelpers, $log) {
         var service = {
-            initElements: _initElements,
-            addElements: _addElements,
-            processChange:_processChange
+            addAllElements: _addAllElements,
+            processChange:_processChange,
+            elementsMap: {}
         };
         return service;
-        function _initElements(elements, graph, scope) {
-            //Add Elements To Graph
-            for(var i in elements){
-                var element = elements[i];
-                if(element.group === 'nodes' || element.group === 'edges'){
-                    _addElement(element,graph,scope);
-                }
-            }
-        }
-        function _processChange(newElements, graph, _scope) {
-            if (newElements.length === 0) {
-                graph.nodes().forEach(function (ele) {
-                    graph.remove(ele);
-                });
-            }
-            if (graph.elements().length === 0) {
-                _addElements(newElements, graph, _scope);
 
-            } else {
-                var graphIndex = {};
-                var newElementIndex = {};
-                graph.elements().each(function (i, ele) {
-                    graphIndex[ele.id()] = 1;
-                });
-                //To Add
-                var toAdd = [];
-                cytoHelpers.asyncEach(newElements, function (ele, index) {
-
-                    newElementIndex[ele.data.id] = ele.data.id;
-                    if (ele.data && ele.data.id) {
-                        if (graphIndex[ele.data.id]) {
-                            //Check if cytoscape element data matches newElement data
-                            var cytoElem = graph.nodes('#' + ele.data.id);
-                            if (cytoElem.data() !== ele.data) {
-                                cytoElem.data(ele.data);
-                            }
-                        } else {
-                            //It's new
-                            toAdd.push(ele);
-                        }
-                        //No ID.  Add It
-                    } else {
-                        toAdd.push(ele);
-                    }
-                }).then(function () {
-                    if (toAdd.length === 0) {
-                        //Must be removing something
-                        graph.elements().each(function (i, ele) {
-                            if (!newElementIndex[ele.id()]) {
-                                var removeEleEdges = ele.neighborhood('edge').jsons();
-                                var removeEdgeIndex = {};
-                                angular.forEach(removeEleEdges, function (edge, i) {
-                                    removeEdgeIndex[edge.data.id] = edge.data.id;
-                                });
-                                for (var ind = newElements.length; ind--;) {
-                                    if (removeEdgeIndex[newElements[ind].data.id]) {
-                                        newElements.splice(ind, 1);
-                                    }
-                                }
-                                graph.remove('#' + ele.id());
-                            }
-                        });
-                    } else {
-                        graph.add(toAdd);
-                    }
-                    graph.style().update();
-                    graph.elements(':visible').layout(_scope.graphLayout || {name: 'grid'});
-                    graph.resize();
-                });
+        function _processChange(newEles, oldEles, graph,_scope){
+            var isEmpty = cytoHelpers.isEmpty;
+            var toAdd = [];
+            var removeCollection;
+            //Remove All Elements
+            if(isEmpty(newEles)){
+                graph.remove(graph.elements());
+                return;
             }
-        }
-        function _addElements(elements,graph,_scope){
-            if(areValidElements(elements)){
-                graph.add(elements);
-                graph.elements(':visible').layout(_scope.graphLayout || {name: 'grid'});
-            }
-        }
-        function areValidElements(nv){
-            var nodeIndex = {};
-            var cleanElements = [];
-            var errors = 0;
-            angular.forEach(nv,function(ele,i){
-                if(!ele.hasOwnProperty('data')){
-                    errors ++;
-                    $log.error('Elements require a data property');
-                }else if(!ele.data.hasOwnProperty('id')){
-                    errors ++;
-                    $log.error('Elements require an id property');
-                }else{
-                    cleanElements.push(ele);
-                    if(ele.group === 'nodes'){
-                        nodeIndex[ele.data.id] = ele.data.id;
+            //Add All Elements
+            if(graph.elements().length === 0){
+                angular.forEach(newEles, function(ele,index){
+                    if(isValidElement(ele,index)){
+                        toAdd.push(makeElement(ele,index))
                     }
-                }
-            });
-            angular.forEach(cleanElements, function(ele){
-                if(ele.group !== 'nodes'){
-                    if(!ele.data.hasOwnProperty('target')){
-                        errors ++;
-                        $log.error('Edges require a target', ele.data);
-                    }
-                    if(!ele.data.hasOwnProperty('source')){
-                        errors ++;
-                        $log.error('Edges require a source', ele.data);
-                    }
-                    if(!nodeIndex[ele.data.target]){
-                        errors ++;
-                        $log.error('Edges require a target node.', ele.data);
-                    }
-                    if(!nodeIndex[ele.data.source]){
-                        errors ++;
-                        $log.error('Edges require a source node.', ele.data);
-                    }
-                }
-            });
-            if(errors > 0){
-                return false;
+                })
             }else{
-                return true;
+                //Find what needs to be added and what needs to be removed.
+                var diff = calcDiff(newEles,oldEles);
+                if(!isEmpty(diff.toAdd)){
+                  angular.forEach(diff.toAdd, function(ele,index){
+                      toAdd.push(makeElement(ele,index));
+                  })
+                };
+                if(!isEmpty(diff.toRemove)){
+                    removeCollection = graph.collection();
+                    angular.forEach(diff.toRemove, function(ele,index){
+                        removeCollection = removeCollection.add(graph.elements('#'+index));
+                    })
+                };
+            };
+            if(toAdd.length !== 0){
+                graph.add(toAdd)
             }
+            if(removeCollection && removeCollection.length !== 0){
+                graph.remove(removeCollection);
+            }
+        };
+        function calcDiff(newEles,oldEles){
+            var diff = {
+                toAdd: {},
+                toRemove: {}
+            };
+            angular.forEach(oldEles, function(oEle, oIndex){
+                if(!newEles[oIndex]){
+                    diff.toRemove[oIndex] = {};
+                    angular.extend(diff.toRemove[oIndex], oEle);
+                }
+            });
+            angular.forEach(newEles, function(nEle,nIndex){
+                if(oldEles[nIndex] || !oldEles[nIndex]){
+                    diff.toAdd[nIndex] = {};
+                    angular.extend(diff.toAdd[nIndex], nEle)
+                }
+            });
+            return diff;
+        }
+        //Initial Load
+        function _addAllElements(elements,graph,_scope) {
+            var toAdd = [];
+            var isValid = true;
+            angular.forEach(elements, function(ele,index){
+                if (isValidElement(ele, index)) {
+                    toAdd.push(makeElement(ele, index))
+                }else{
+                    isValid = false;
+                }
+            });
+            if(isValid){
+                graph.add(toAdd);
+            }
+        }
+        function makeElement(ele,index){
+           var cyElement = {};
+           angular.extend(cyElement,ele);
+            //Add To Index
+           service.elementsMap[index] = ele;
+            //Ensure ID
+           if(!cyElement.data.hasOwnProperty('id')){
+               cyElement.data.id = index;
+           }
+           if(!cyElement.hasOwnProperty('group')){
+                if(cyElement.data.hasOwnProperty('target') && cyElement.data.hasOwnProperty('source')){
+                    cyElement.group = 'edges';
+                }else{
+                    cyElement.group = 'nodes';
+                }
+            }
+            return cyElement;
 
         }
+        function isValidElement(ele){
+            var valid = true;
+            if(!ele.hasOwnProperty('data')){
+                $log.error('Elements require a data property',ele);
+                valid = false;
+            }
+            return valid;
+        }
+
     }
 })();
 (function () {

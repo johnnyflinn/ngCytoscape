@@ -6,7 +6,7 @@
         .controller('defaultsCtrl', defaultsCtrl);
     defaultsCtrl.$inject = ['$scope', 'cytoData'];
     function defaultsCtrl($scope, cytoData){
-        $scope.switch = function(text){
+       /* $scope.switch = function(text){
             if(text === 'HTML'){
                 $scope.codeView.html = true;
                 $scope.codeView.javascript = false;
@@ -18,17 +18,20 @@
         $scope.codeView = {
             html:true,
             javascript:false
-        };
+        };*/
+        $scope.layout = {name:'grid'};
         $scope.defaults = {
             zoomingEnabled: false,
             userPanningEnabled: false
         };
-        $scope.elements = [
-            { group:'nodes',data: { id: 'ngCyto', name: 'ngCytoscape', href: 'http://cytoscape.org' } },
-            { group:'nodes',data: { id: 'cyto', name: 'Cytoscape.js', href: 'http://js.cytoscape.org' } },
-            { group:'nodes',data: { id: 'ng', name: 'Angular.js', href: 'http://js.cytoscape.org' } },
-            { data: { id: 'ngToNgCyto', source:'ngCyto', target:'ng' }},
-            { data: { id: 'cytoToNgCyto', source:'ngCyto', target:'cyto' }}
-        ];
+
+        $scope.elements = {
+            n1:{
+                data:{}
+            },
+            n2:{
+                data:{}
+            },
+        };
     }
 })();

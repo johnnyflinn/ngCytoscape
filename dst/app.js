@@ -59,10 +59,10 @@
         ];
 
         var runLayouts;
-        runLayouts = $interval(function(){
+       /* runLayouts = $interval(function(){
             var ran = Math.floor(Math.random() * 4);
             $scope.layout = layouts[ran];
-        },10000);
+        },10000);*/
          $scope.style =[
          {
              selector: 'node',
@@ -92,10 +92,35 @@
 
     angular
         .module('app')
+        .controller('codeView', codeView);
+    codeView.$inject = ['$scope'];
+    function codeView($scope){
+        var vm = this;
+        vm.switch = function(text){
+         if(text === 'HTML'){
+            vm.codeView.html = true;
+            vm.codeView.javascript = false;
+         }else{
+            vm.codeView.html = false;
+            vm.codeView.javascript = true;
+         }
+         };
+         vm.codeView = {
+         html:true,
+         javascript:false
+         };
+
+    }
+})();
+(function(){
+    'use strict';
+
+    angular
+        .module('app')
         .controller('defaultsCtrl', defaultsCtrl);
     defaultsCtrl.$inject = ['$scope', 'cytoData'];
     function defaultsCtrl($scope, cytoData){
-        $scope.switch = function(text){
+       /* $scope.switch = function(text){
             if(text === 'HTML'){
                 $scope.codeView.html = true;
                 $scope.codeView.javascript = false;
@@ -107,18 +132,21 @@
         $scope.codeView = {
             html:true,
             javascript:false
-        };
+        };*/
+        $scope.layout = {name:'grid'};
         $scope.defaults = {
             zoomingEnabled: false,
             userPanningEnabled: false
         };
-        $scope.elements = [
-            { group:'nodes',data: { id: 'ngCyto', name: 'ngCytoscape', href: 'http://cytoscape.org' } },
-            { group:'nodes',data: { id: 'cyto', name: 'Cytoscape.js', href: 'http://js.cytoscape.org' } },
-            { group:'nodes',data: { id: 'ng', name: 'Angular.js', href: 'http://js.cytoscape.org' } },
-            { data: { id: 'ngToNgCyto', source:'ngCyto', target:'ng' }},
-            { data: { id: 'cytoToNgCyto', source:'ngCyto', target:'cyto' }}
-        ];
+
+        $scope.elements = {
+            n1:{
+                data:{}
+            },
+            n2:{
+                data:{}
+            },
+        };
     }
 })();
 (function(){
