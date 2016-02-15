@@ -20,10 +20,10 @@
         ];
 
         var runLayouts;
-       /* runLayouts = $interval(function(){
+        runLayouts = $interval(function(){
             var ran = Math.floor(Math.random() * 4);
             $scope.layout = layouts[ran];
-        },10000);*/
+        },10000);
          $scope.style =[
          {
              selector: 'node',

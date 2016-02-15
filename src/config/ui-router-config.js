@@ -18,5 +18,10 @@
                     templateUrl: "dst/templates/gettingStarted.html",
                     controller: 'gettingStartedCtrl'
                 })
+                .state('elements', {
+                    url: "/elements",
+                    templateUrl: "dst/templates/elements.html",
+                    controller: 'elementsCtrl'
+                })
         });
 })();

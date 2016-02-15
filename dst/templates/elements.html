@@ -1,0 +1,44 @@
+<h3>Elements Options</h3>
+<div class="col-md-6">
+    <div class="cy-examples well">
+        <cytoscape graph-elements="elements"></cytoscape>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="btn-group">
+        <button class="btn btn-raised btn-success" ng-click="addElement()">Add Element</button>
+        <button class="btn btn-raised btn-danger" ng-click="removeElement()">Remove Element</button>
+    </div>
+</div>
+<span class="col-md-12">
+    <p class="text-warning"></p>
+   </span>
+
+<div  class="col-md-12" ng-controller="codeView as cv">
+    <div class="btn-group">
+        <button class="btn btn-raised btn-primary" ng-click="cv.switch('HTML')">HTML</button>
+        <button class="btn btn-raised btn-primary" ng-click="cv.switch('JAVASCIRPT')">JAVASCRIPT</button>
+    </div>
+    <div hljs ng-show="cv.codeView.html">
+        <cytoscape graph-elements="elements"></cytoscape>
+        <button ng-click="addElement()">Add Element</button>
+        <button ng-click="removeElement()">Remove Element</button>
+    </div>
+    <div hljs ng-show="cv.codeView.javascript">
+        $scope.elements = {};
+        $scope.addElement = function(){
+            angular.extend($scope.elements,{
+                n1:{
+                    data:{},
+                    position:{
+                        x: 50,
+                        y: 50
+                    }
+                }
+            })
+        };
+        $scope.removeElement = function(){
+            $scope.elements = {};
+        };
+        </div>
+</div>

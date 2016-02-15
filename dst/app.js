@@ -35,6 +35,11 @@
                     templateUrl: "dst/templates/gettingStarted.html",
                     controller: 'gettingStartedCtrl'
                 })
+                .state('elements', {
+                    url: "/elements",
+                    templateUrl: "dst/templates/elements.html",
+                    controller: 'elementsCtrl'
+                })
         });
 })();
 (function(){
@@ -59,10 +64,10 @@
         ];
 
         var runLayouts;
-       /* runLayouts = $interval(function(){
+        runLayouts = $interval(function(){
             var ran = Math.floor(Math.random() * 4);
             $scope.layout = layouts[ran];
-        },10000);*/
+        },10000);
          $scope.style =[
          {
              selector: 'node',
@@ -147,6 +152,32 @@
                 data:{}
             },
         };
+    }
+})();
+(function(){
+    'use strict';
+
+    angular
+        .module('app')
+        .controller('elementsCtrl', elementsCtrl);
+    elementsCtrl.$inject = ['$scope'];
+    function elementsCtrl($scope){
+        $scope.layout = {name:'grid'};
+        $scope.addElement = function(){
+            angular.extend($scope.elements,{
+                n1:{
+                    data:{},
+                    position:{
+                        x: 50,
+                        y: 50
+                    }
+                }
+            })
+        };
+        $scope.removeElement = function(){
+            $scope.elements = {};
+        };
+        $scope.elements = {};
     }
 })();
 (function(){
