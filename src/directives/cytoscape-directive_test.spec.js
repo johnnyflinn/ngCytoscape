@@ -22,14 +22,21 @@ beforeEach(module('ngCytoscape'));
         $rootScope.$apply();
     }));
     it('should have loaded cytoscape inside the directive', function() {
-        //var isolated = element.isolateScope();
-
-
+       var element = angular.element('<cytoscape></cytoscape>');
+       element = $compile(element)(scope);
+       scope.$digest();
+       expect(element.find('canvas').length).toEqual(3);
     });
-    it('should add elements', function() {
-      // console.log(scope)
-    });
-    it('should run layout', function() {
-      // console.log(scope)
+    it('should set defaults', function() {
+        angular.extend(scope, {defaults:{zoomingEnabled:false}});
+        var element = angular.element('<cytoscape graph-options="defaults"></cytoscape>');
+        element = $compile(element)(scope);
+        var cyGraph;
+        cytoData.getGraph().then(function(graph){
+            cyGraph = graph;
+        });
+        scope.$digest();
+        console.log(cyGraph.zoomingEnabled());
+        expect(cyGraph.zoomingEnabled()).toEqual(false);
     });
 });
