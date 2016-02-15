@@ -21,25 +21,7 @@ describe('Directive: cytoscape', function(){
     afterEach(inject(function($rootScope) {
         $rootScope.$apply();
     }));
-    it('should have loaded cytoscape inside the directive', function() {
-        var element = angular.element('<cytoscape></cytoscape>');
-        element = $compile(element)(scope);
-        scope.$digest();
-        expect(element.find('canvas').length).toEqual(3);
-    });
-    it('should set defaults', function() {
-        angular.extend(scope, {defaults:{zoomingEnabled:false}});
-        var element = angular.element('<cytoscape graph-options="defaults"></cytoscape>');
-        element = $compile(element)(scope);
-        var cyGraph;
-        cytoData.getGraph().then(function(graph){
-            cyGraph = graph;
-        });
-        scope.$digest();
-        console.log(cyGraph.zoomingEnabled());
-        expect(cyGraph.zoomingEnabled()).toEqual(false);
-    });
-    it('should add elements', function() {
+    it('should add new elements', function() {
         angular.extend(scope, {elements:{
             n1:{
                 data:{}
@@ -52,22 +34,48 @@ describe('Directive: cytoscape', function(){
             cyGraph = graph;
         });
         scope.$digest();
-        expect(cyGraph.elements().length).toEqual(1);
+        angular.extend(scope.elements,{
+            n2:{
+                data:{}
+            }
+        });
+        scope.$digest();
+        expect(cyGraph.elements().length).toEqual(2);
     });
-    it('should set layouts', function() {
-        angular.extend(scope, {layout:{name:'circle'}});
+    it('should remove all elements', function() {
         angular.extend(scope, {elements:{
             n1:{
                 data:{}
             }
         }});
-        var element = angular.element('<cytoscape graph-elements="elements" graph-layout="layout"></cytoscape>');
+        var element = angular.element('<cytoscape graph-elements="elements"></cytoscape>');
         element = $compile(element)(scope);
         var cyGraph;
         cytoData.getGraph().then(function(graph){
             cyGraph = graph;
         });
         scope.$digest();
-        expect(cyGraph._private.prevLayout.options.name).toEqual('circle');
+        scope.elements = {};
+        scope.$digest();
+        expect(cyGraph.elements().length).toEqual(0);
+    });
+    it('should update data property', function() {
+        angular.extend(scope, {elements:{
+            n1:{
+                data:{
+                    weight: 5
+                }
+            }
+        }});
+        var element = angular.element('<cytoscape graph-elements="elements"></cytoscape>');
+        element = $compile(element)(scope);
+        var cyGraph;
+        cytoData.getGraph().then(function(graph){
+            cyGraph = graph;
+        });
+        scope.$digest();
+        scope.elements.n1.data.weight = 10;
+        scope.$digest();
+        expect(cyGraph.elements('#n1').data().weight).toEqual(10);
     });
 });

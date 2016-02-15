@@ -29,6 +29,7 @@
                         toAdd.push(makeElement(ele,index))
                     }
                 })
+
             }else{
                 //Find what needs to be added and what needs to be removed.
                 var diff = calcDiff(newEles,oldEles);
@@ -45,7 +46,8 @@
                 };
             };
             if(toAdd.length !== 0){
-                graph.add(toAdd)
+                graph.add(toAdd);
+                graph.layout(_scope.graphLayout || {name:'grid'})
             }
             if(removeCollection && removeCollection.length !== 0){
                 graph.remove(removeCollection);

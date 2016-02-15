@@ -64,7 +64,6 @@
         function linkFn(scope,element,attrs,ctrlFn){
             var isDefined = cytoHelpers.isDefined;
             var isEmpty = cytoHelpers.isEmpty;
-
             cytoGraphDefaults.setDefaults(scope.graphOptions, scope.graphLayout, attrs.id, scope.graphStyle);
             scope.graphId =  attrs.id;
             var cy = new CytoscapeGraph(element[0], cytoGraphDefaults.getGraphCreationDefaults(attrs.id));
@@ -288,6 +287,7 @@
                         toAdd.push(makeElement(ele,index))
                     }
                 })
+
             }else{
                 //Find what needs to be added and what needs to be removed.
                 var diff = calcDiff(newEles,oldEles);
@@ -304,7 +304,8 @@
                 };
             };
             if(toAdd.length !== 0){
-                graph.add(toAdd)
+                graph.add(toAdd);
+                graph.layout(_scope.graphLayout || {name:'grid'})
             }
             if(removeCollection && removeCollection.length !== 0){
                 graph.remove(removeCollection);

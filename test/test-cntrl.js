@@ -10,6 +10,9 @@
         $scope.count = 500;
         cytoData.getGraph('testgraph').then(function(graph){
             $scope.graph = graph;
+            $scope.graph.on('layoutstart', function(evt){
+                console.log('from graph', evt)
+            });
         });
         $scope.removeControl = function(){
             delete $scope.elements['ngCyto'];
@@ -67,6 +70,10 @@
             }
             angular.extend($scope.elements,elements);
         }
+
+        $scope.$on('cy:core:layoutstop', function(e,evt){
+            console.log(evt)
+        });
         $scope.runLayout = function(){
             $scope.graph.layout({name:'grid'})
         }

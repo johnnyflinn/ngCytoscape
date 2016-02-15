@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ngCytoscape Test</title>
-    <link rel="stylesheet" href="../ngCytoscape/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
     <style>
         .ngCytoscape{
             height: 500px;
@@ -24,7 +24,7 @@
         {{selected}}
     </div>
     <div class="col-md-6">
-        <cytoscape id="testgraph" graph-elements="elements" graph-style="style"></cytoscape>
+        <cytoscape id="testgraph" graph-elements="elements" graph-style="style" graph-layout="{name:'circle'}"></cytoscape>
     </div>
     <div class="col-md-3">
         <button class="btn btn-default" ng-click="runLayout()">Layout</button>
