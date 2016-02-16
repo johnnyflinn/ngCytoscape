@@ -15,9 +15,13 @@ Cytoscape.js
 ##Installation
 
 ```javascript
-<script src="pathToAngular/angular.js">
-<script src="pathToCytoscape/cytoscape.js">
-<script src="ngCytoscape.js">
+bower install ngCytoscape
+npm install
+```
+```javascript
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/cytoscape/dist/cytoscape.js"></script>
+<script src="bower_components/ngCytoscape/dst/ngCytoscape.js">
 ```
 Include `ngCytoscape` as a dependency in your application.
 
