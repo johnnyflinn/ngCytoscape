@@ -26,6 +26,6 @@
     "cytoscape": "~2.6.3",
     "bootstrap": "~3.3.6",
     "angular-highlightjs": "~0.5.1",
-    "angular-ui-router": "ui-router#~0.2.18"
+    "angular-ui-router": "ui-router#~0.2.18",
   }
 }

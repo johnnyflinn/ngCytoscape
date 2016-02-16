@@ -23,5 +23,10 @@
                     templateUrl: "dst/templates/elements.html",
                     controller: 'elementsCtrl'
                 })
+                .state('layouts', {
+                    url: "/layouts",
+                    templateUrl: "dst/templates/layouts.html",
+                    controller: 'layoutsCtrl'
+                })
         });
 })();
