@@ -32,7 +32,7 @@
 
             }else{
                 //Find what needs to be added and what needs to be removed.
-                var diff = calcDiff(newEles,oldEles);
+                var diff = calcDiff(newEles, oldEles, graph);
                 if(!isEmpty(diff.toAdd)){
                   angular.forEach(diff.toAdd, function(ele,index){
                       toAdd.push(makeElement(ele,index));
@@ -53,7 +53,7 @@
                 graph.remove(removeCollection);
             }
         };
-        function calcDiff(newEles,oldEles){
+        function calcDiff(newEles, oldEles, graph){
             var diff = {
                 toAdd: {},
                 toRemove: {}
@@ -65,10 +65,17 @@
                 }
             });
             angular.forEach(newEles, function(nEle,nIndex){
-                if(oldEles[nIndex] || !oldEles[nIndex]){
-                    diff.toAdd[nIndex] = {};
-                    angular.extend(diff.toAdd[nIndex], nEle)
-                }
+                if(oldEles[nIndex]) {
+                    var gEle = graph.elements('#'+nIndex);
+                    if(gEle.data() !== nEle.data){
+                        gEle.data(nEle.data);
+                    }
+                }else{
+                        diff.toAdd[nIndex] = {};
+                        angular.extend(diff.toAdd[nIndex], nEle)
+                    }
+
+
             });
             return diff;
         }
