@@ -26,7 +26,7 @@
             if(graph.elements().length === 0){
                 angular.forEach(newEles, function(ele,index){
                     if(isValidElement(ele,index)){
-                        toAdd.push(makeElement(ele,index))
+                        toAdd.push(new Element(ele,index).ele)
                     }
                 })
 
@@ -35,9 +35,12 @@
                 var diff = calcDiff(newEles, oldEles, graph);
                 if(!isEmpty(diff.toAdd)){
                   angular.forEach(diff.toAdd, function(ele,index){
-                      toAdd.push(makeElement(ele,index));
+                      toAdd.push(new Element(ele,index).ele);
                   })
-                };
+                }
+                if(!isEmpty(diff.toUpdate)){
+                    _batchToUpdate(diff.toUpdate, graph)
+                }
                 if(!isEmpty(diff.toRemove)){
                     removeCollection = graph.collection();
                     angular.forEach(diff.toRemove, function(ele,index){
@@ -52,31 +55,37 @@
             if(removeCollection && removeCollection.length !== 0){
                 graph.remove(removeCollection);
             }
+            graph.style().update();
         };
-        function calcDiff(newEles, oldEles, graph){
+        function _batchToUpdate(toUpdate,graph){
+            graph.batch(function(){
+                angular.forEach(toUpdate, function(ele){
+                    graph.$('#'+ele.id)
+                        .data(ele.data)
+                });
+                graph.style().update();
+            })
+        }
+        function calcDiff(newEles, oldEles, graph) {
             var diff = {
                 toAdd: {},
-                toRemove: {}
+                toRemove: {},
+                toUpdate: []
             };
-            angular.forEach(oldEles, function(oEle, oIndex){
-                if(!newEles[oIndex]){
-                    diff.toRemove[oIndex] = {};
-                    angular.extend(diff.toRemove[oIndex], oEle);
-                }
-            });
-            angular.forEach(newEles, function(nEle,nIndex){
-                if(oldEles[nIndex]) {
-                    var gEle = graph.elements('#'+nIndex);
-                    if(gEle.data() !== nEle.data){
-                        gEle.data(nEle.data);
+            if (Object.keys(oldEles).length !== Object.keys(newEles).length) {
+                angular.forEach(oldEles, function (oEle, oIndex) {
+                    if (!newEles[oIndex]) {
+                        diff.toRemove[oIndex] = {};
+                        angular.extend(diff.toRemove[oIndex], oEle);
                     }
-                }else{
+                });
+                angular.forEach(newEles, function (nEle, nIndex) {
+                    if (!oldEles[nIndex]) {
                         diff.toAdd[nIndex] = {};
                         angular.extend(diff.toAdd[nIndex], nEle)
                     }
-
-
-            });
+                });
+            }
             return diff;
         }
         //Initial Load
@@ -85,7 +94,7 @@
             var isValid = true;
             angular.forEach(elements, function(ele,index){
                 if (isValidElement(ele, index)) {
-                    toAdd.push(makeElement(ele, index))
+                    toAdd.push(new Element(ele,index).ele)
                 }else{
                     isValid = false;
                 }
@@ -121,6 +130,20 @@
             }
             return valid;
         }
-
+        function Element(ele,index){
+            this.ele = {};
+            angular.extend(this.ele,ele);
+            if(!this.ele.data.hasOwnProperty('id')){
+                this.ele.data.id = index;
+            }
+            if(!this.hasOwnProperty('group')){
+                if(this.ele.data.hasOwnProperty('target') && this.ele.data.hasOwnProperty('source')){
+                    this.ele.group = 'edges';
+                }else{
+                    this.ele.group = 'nodes';
+                }
+            }
+            return this;
+        }
     }
 })();

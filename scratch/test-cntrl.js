@@ -20,6 +20,12 @@
         $scope.removeSelected = function(){
             delete $scope.elements[$scope.selected.id]
         }
+        $scope.reAddNewStyle = function(){
+            $scope.elements.ngCyto.data.weight = 350
+        };
+        $scope.resetStyle = function(){
+            $scope.elements.ngCyto.data.weight = 50
+        };
         $scope.addControlElements = function(){
             angular.extend($scope.elements, {
                 ngCyto:{
@@ -38,6 +44,7 @@
                     }
                 }
             })
+            console.log($scope.elements)
         };
         $scope.$on('cy:node:click', function(e,evt){
            $scope.selected = evt.cyTarget.data();

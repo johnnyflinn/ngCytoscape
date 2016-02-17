@@ -27,7 +27,7 @@
                     cytoElementsHelpers.processChange(nv, ov, graph,_scope);
                 }
             },true);
-            scope.$watch(dataMap,function(nv,ov){
+/*            scope.$watch(dataMap,function(nv,ov){
                 if(nv.length !== 0 && nv !== ov){
                     if(graph){
                         graph.style().update()
@@ -36,7 +36,7 @@
             },true);
             function dataMap(){
                 return Object.keys(_scope.graphElements).map(function(key){return _scope.graphElements[key].data})
-            }
+            }*/
         }
     }
 })();
