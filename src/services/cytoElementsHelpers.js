@@ -22,7 +22,6 @@
                 graph.remove(graph.elements());
                 return;
             }
-            //Add All Elements
             if(graph.elements().length === 0){
                 angular.forEach(newEles, function(ele,index){
                     if(isValidElement(ele,index)){
