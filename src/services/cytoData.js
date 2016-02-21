@@ -13,6 +13,11 @@
         _private.Graph = {};
         var self = this;
 
+        self.unresolveGraph = function(graphId){
+            var id = cytoHelpers.obtainEffectiveGraphId(_private.Graph, graphId);
+            _private['Graph'][id] = undefined;
+        };
+
         self.setGraph = function(gObject, scopeId) {
             var defer = getUnresolvedDefer(_private.Graph, scopeId);
             defer.resolve(gObject);
