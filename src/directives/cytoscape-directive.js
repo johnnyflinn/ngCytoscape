@@ -53,6 +53,7 @@
         return directive;
 
         function ctrlFn($scope){
+            /* jshint ignore:start */
             this._cytoGraph = $q.defer();
             this._getCytoscapeGraph = function(){
                 return this._cytoGraph.promise;
@@ -60,6 +61,7 @@
             this._getCytoscapeScope = function(){
                 return $scope;
             };
+            /* jshint ignore:end */
         }
         function linkFn(scope,element,attrs,ctrlFn){
             var isDefined = cytoHelpers.isDefined;
@@ -97,8 +99,8 @@
             });
             scope.$on('$destroy', function(){
                 cy.destroy();
-                cytoData.unresolveGraph(attrs.id)
-            })
+                cytoData.unresolveGraph(attrs.id);
+            });
 
         }
     }

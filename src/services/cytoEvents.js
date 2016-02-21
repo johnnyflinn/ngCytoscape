@@ -61,6 +61,7 @@
         function setEvents(cy) {
             var events = _getAllEvents();
             for (var i = 0; i < events.length; i++) {
+                /* jshint ignore:start */
                 cy.on(events[i],function(evt) {
                     if (evt.cyTarget === cy){
                         var graph = evt.cyTarget;
@@ -70,13 +71,13 @@
                     }
                 });
                 cy.on(events[i], 'node', function (evt) {
-
                     $rootScope.$broadcast('cy:node:' + evt.type, evt);
                 });
                 cy.on(events[i], 'edge', function (evt) {
                     var edge = evt.cyTarget;
                     $rootScope.$broadcast('cy:edge:' + evt.type, evt);
                 });
+                /* jshint ignore:end */
             }
         }
 

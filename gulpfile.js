@@ -3,7 +3,7 @@ var gulp = require('gulp');
 
 // Include Our Plugins
 var jshint = require('gulp-jshint');
-
+var Server = require('karma').Server;
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
@@ -30,11 +30,16 @@ gulp.task('scripts', function() {
 
         .pipe(gulp.dest('dst'));
 });
-
+gulp.task('test', function (done) {
+    new Server({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, done).start();
+});
 // Watch Files For Changes
 gulp.task('watch', function() {
     gulp.watch(['src/services/*.js', 'src/directives/*.js'], ['lint', 'scripts']);
 });
-
+gulp.task('build', ['lint','test','scripts']);
 // Default Task
-gulp.task('default', ['lint', 'scripts', 'watch']);
+gulp.task('dev', ['lint', 'scripts', 'watch']);

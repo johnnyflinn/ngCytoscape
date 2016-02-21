@@ -11,11 +11,13 @@
             setResolvedDefer = cytoHelpers.setResolvedDefer;
         var _private = {};
         _private.Graph = {};
+        /* jshint ignore:start */
         var self = this;
+        /* jshint ignore:end */
 
         self.unresolveGraph = function(graphId){
             var id = cytoHelpers.obtainEffectiveGraphId(_private.Graph, graphId);
-            _private['Graph'][id] = undefined;
+            _private.Graph[id] = undefined;
         };
 
         self.setGraph = function(gObject, scopeId) {

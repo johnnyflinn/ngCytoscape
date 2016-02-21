@@ -2,7 +2,8 @@ module.exports = function(config){
   config.set({
 
     basePath : '',
-
+    browserDisconnectTimeout: 6000,
+    reporters: ['progress', 'html'],
     files : [
       'bower_components/angular/angular.js',
       'bower_components/angular-route/angular-route.js',
@@ -22,11 +23,14 @@ module.exports = function(config){
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-jasmine',
-            'karma-junit-reporter'
+            'karma-junit-reporter',
+            'karma-htmlfile-reporter'
             ],
-
+    htmlReporter:{
+      outputFile: 'tests_out/test_unit.html'
+    },
     junitReporter : {
-      outputFile: 'test_out/unit.xml',
+      outputFile: 'test_out/test_unit.xml',
       suite: 'unit'
     }
 

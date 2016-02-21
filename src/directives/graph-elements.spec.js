@@ -1,7 +1,7 @@
 
 'use strict';
 
-describe('Directive: cytoscape', function(){
+describe('Directive: graph-elements', function(){
     var $compile;
     var $rootScope;
     var scope;

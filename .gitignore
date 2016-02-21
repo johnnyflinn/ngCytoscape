@@ -1,6 +1,7 @@
 logs/*
 !.gitkeep
 node_modules/
+tests_out/
 bower_components/
 ngCytoscape/
 demo/
