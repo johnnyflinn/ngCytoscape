@@ -225,59 +225,6 @@
         return CytoscapeGraph;
     }
 })();
-'use strict';
-describe('Factory: cytoCreateGraph', function(){
-    var CytoscapeGraph;
-    beforeEach(module('ngCytoscape'));
-    beforeEach(inject(function(_CytoscapeGraph_){
-        CytoscapeGraph = _CytoscapeGraph_;
-    }));
-    afterEach(inject(function($rootScope) {
-        $rootScope.$apply();
-    }));
-    it('should create graph instance', function(){
-        var cy = new CytoscapeGraph();
-        var pass = false;
-        if(cy.hasOwnProperty('_private')){
-            pass = true;
-        }
-        expect(pass).toBe(true);
-    });
-});
-(function(){
-    'use strict';
-    angular
-        .module('ngCytoscape')
-        .service('cytoData',cytoData);
-
-    cytoData.$inject = ['cytoHelpers'];
-    function cytoData(cytoHelpers){
-        var getDefer = cytoHelpers.getDefer,
-            getUnresolvedDefer = cytoHelpers.getUnresolvedDefer,
-            setResolvedDefer = cytoHelpers.setResolvedDefer;
-        var _private = {};
-        _private.Graph = {};
-        /* jshint ignore:start */
-        var self = this;
-        /* jshint ignore:end */
-
-        self.unresolveGraph = function(graphId){
-            var id = cytoHelpers.obtainEffectiveGraphId(_private.Graph, graphId);
-            _private.Graph[id] = undefined;
-        };
-
-        self.setGraph = function(gObject, scopeId) {
-            var defer = getUnresolvedDefer(_private.Graph, scopeId);
-            defer.resolve(gObject);
-            setResolvedDefer(_private.Graph, scopeId);
-        };
-
-        self.getGraph = function(scopeId) {
-            var defer = getDefer(_private.Graph, scopeId);
-            return defer.promise;
-        };
-    }
-})();
 
 (function() {
     'use strict';
@@ -424,6 +371,40 @@ describe('Factory: cytoCreateGraph', function(){
             }
             return this;
         }
+    }
+})();
+(function(){
+    'use strict';
+    angular
+        .module('ngCytoscape')
+        .service('cytoData',cytoData);
+
+    cytoData.$inject = ['cytoHelpers'];
+    function cytoData(cytoHelpers){
+        var getDefer = cytoHelpers.getDefer,
+            getUnresolvedDefer = cytoHelpers.getUnresolvedDefer,
+            setResolvedDefer = cytoHelpers.setResolvedDefer;
+        var _private = {};
+        _private.Graph = {};
+        /* jshint ignore:start */
+        var self = this;
+        /* jshint ignore:end */
+
+        self.unresolveGraph = function(graphId){
+            var id = cytoHelpers.obtainEffectiveGraphId(_private.Graph, graphId);
+            _private.Graph[id] = undefined;
+        };
+
+        self.setGraph = function(gObject, scopeId) {
+            var defer = getUnresolvedDefer(_private.Graph, scopeId);
+            defer.resolve(gObject);
+            setResolvedDefer(_private.Graph, scopeId);
+        };
+
+        self.getGraph = function(scopeId) {
+            var defer = getDefer(_private.Graph, scopeId);
+            return defer.promise;
+        };
     }
 })();
 (function () {
