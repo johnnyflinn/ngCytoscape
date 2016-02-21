@@ -24,6 +24,6 @@
     "angular-mocks": "~1.4.0",
     "angular-route": "~1.4.0",
     "cytoscape": "~2.6.1",
-    "angular": "angularjs#~1.5.0"
+    "angular": "!angularjs#~1.5.0"
   }
 }
