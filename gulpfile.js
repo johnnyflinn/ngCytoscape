@@ -18,19 +18,6 @@ gulp.task('lint', function() {
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
     return gulp.src([
-<<<<<<< HEAD
-            'src/directives/cytoscape-directive.js',
-            'src/directives/graph-elements.js',
-            'src/directives/graph-layout.js',
-            'src/directives/graph-style.js',
-            'src/services/cytoCreateGraph.js',
-            'src/services/cytoElementsHelpers.js',
-            'src/services/cytoData.js',
-            'src/services/cytoEvents.js',
-            'src/services/cytoGraphDefaults.js',
-            'src/services/cytoHelpers.js',
-            'src/services/cytoLayoutDefaults.js'
-=======
         'src/directives/cytoscape-directive.js',
         'src/directives/graph-elements.js',
         'src/directives/graph-layout.js',
@@ -42,7 +29,6 @@ gulp.task('scripts', function() {
         'src/services/cytoGraphDefaults.js',
         'src/services/cytoHelpers.js',
         'src/services/cytoLayoutDefaults.js'
->>>>>>> development
         ])
         .pipe(concat('ngCytoscape.js'))
         .pipe(gulp.dest('dst'))
