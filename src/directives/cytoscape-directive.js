@@ -95,6 +95,10 @@
              cy.ready(function() {
                 cytoData.setGraph(cy, attrs.id);
             });
+            scope.$on('$destroy', function(){
+                cy.destroy();
+                cytoData.unresolveGraph(attrs.id)
+            })
 
         }
     }

@@ -95,6 +95,10 @@
              cy.ready(function() {
                 cytoData.setGraph(cy, attrs.id);
             });
+            scope.$on('$destroy', function(){
+                cy.destroy();
+                cytoData.unresolveGraph(attrs.id)
+            })
 
         }
     }
@@ -244,6 +248,11 @@
         _private.Graph = {};
         var self = this;
 
+        self.unresolveGraph = function(graphId){
+            var id = cytoHelpers.obtainEffectiveGraphId(_private.Graph, graphId);
+            _private['Graph'][id] = undefined;
+        };
+
         self.setGraph = function(gObject, scopeId) {
             var defer = getUnresolvedDefer(_private.Graph, scopeId);
             defer.resolve(gObject);
@@ -280,7 +289,6 @@
                 graph.remove(graph.elements());
                 return;
             }
-            //Add All Elements
             if(graph.elements().length === 0){
                 angular.forEach(newEles, function(ele,index){
                     if(isValidElement(ele,index)){
