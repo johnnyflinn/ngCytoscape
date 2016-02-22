@@ -3,9 +3,9 @@ ngCytoscape
 
 A simple angular wrapper for the [Cytocape.js](http://js.cytoscape.org/) library.
 
-v0.0.4 [![Build Status](https://travis-ci.org/johnnyflinn/ngCytoscape.svg?branch=v0.0.4)](https://travis-ci.org/johnnyflinn/ngCytoscape)
+v0.0.5 [![Build Status](https://travis-ci.org/johnnyflinn/ngCytoscape.svg?branch=v0.0.4)](https://travis-ci.org/johnnyflinn/ngCytoscape)
 Master [![Build Status](https://travis-ci.org/johnnyflinn/ngCytoscape.svg?branch=master)](https://travis-ci.org/johnnyflinn/ngCytoscape)
-Development: [![Build Status](https://travis-ci.org/johnnyflinn/ngCytoscape.svg?branch=development)](https://travis-ci.org/johnnyflinn/ngCytoscape)
+
 
 Demos
 -----------
@@ -83,13 +83,23 @@ Controller
 ```
 
 #### cytoscape instance
-Obtain the cytoscape graph core by making a call to cytoData.getGraph().  This will return a promise with the graph instance.  If you have multiple graphs, they must contain an id property.  Then you can pass the id to cytoData.getGraph('id') to obtain the corresponding graph instance.
+Inject cytoData in your controller as a dependency. Obtain the cytoscape graph core by making a call to cytoData.getGraph().   This will return a promise with the graph instance.  If you have multiple graphs, they must contain an id property.  Then you can pass the id to cytoData.getGraph('id') to obtain the corresponding graph instance.
 ```javascript
 //Single Graph Instance
-$scope.graph = {};
-cytoData.getGraph().then(function(graph){
- $scope.graph = graph
-})
+(function(){
+ angular
+  .module('app')
+  .controller('example');
+  
+  example.$inject = ['$scope', 'cytoData']S
+  
+  function example($scope, cytoData){
+      $scope.graph = {};
+      cytoData.getGraph().then(function(graph){
+        $scope.graph = graph;
+      }
+  }
+}();
 ```
 Now all core functionality is available on $scope.graph
 ```javascript
