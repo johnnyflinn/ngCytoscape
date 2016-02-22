@@ -33,5 +33,10 @@
                     templateUrl: "dst/templates/styles.html",
                     controller: 'stylesCtrl'
                 })
+                .state('events', {
+                    url: "/events",
+                    templateUrl: "dst/templates/events.html",
+                    controller: 'eventsCtrl'
+                })
         });
 })();

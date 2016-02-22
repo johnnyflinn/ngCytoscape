@@ -1,0 +1,49 @@
+<div>
+    <h3>Elements Options</h3>
+    <div class="col-md-6">
+        <div class="cy-examples well">
+            <cytoscape graph-elements="elements"></cytoscape>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="btn-group">
+            <p class="text-primary"><b>Interact with the node to see events</b></p>
+            <p class="h3 text-warning">{{event.name}}</p>
+        </div>
+    </div>
+<span class="col-md-12">
+    <p class="text-warning">See <a href="http://js.cytoscape.org/#events">http://js.cytoscape.org/#events</a> for all available events.</p>
+   </span>
+
+    <div  class="col-md-12" ng-controller="codeView as cv">
+        <div class="btn-group">
+            <button class="btn btn-raised btn-primary" ng-click="cv.switch('HTML')">HTML</button>
+            <button class="btn btn-raised btn-primary" ng-click="cv.switch('JAVASCIRPT')">JAVASCRIPT</button>
+        </div>
+        <div hljs ng-show="cv.codeView.html">
+            <cytoscape graph-elements="elements"></cytoscape>
+        </div>
+        <div hljs ng-show="cv.codeView.javascript">
+$scope.$on('cy:node:mouseover', function(ng,cy){
+    $scope.event.name = 'cy:node:mouseover';
+    $scope.$apply();
+});
+$scope.$on('cy:node:mouseout', function(ng,cy){
+    $scope.event.name = 'cy:node:mouseout';
+    $scope.$apply();
+});
+$scope.$on('cy:node:mousedown', function(ng,cy){
+    $scope.event.name = 'cy:node:mousedown';
+    $scope.$apply();
+});
+$scope.$on('cy:node:mouseup', function(ng,cy){
+    $scope.event.name = 'cy:node:mouseup';
+    $scope.$apply();
+});
+$scope.$on('cy:node:drag', function(ng,cy){
+    $scope.event.name = 'cy:node:drag';
+    $scope.$apply();
+})
+        </div>
+    </div>
+</div>
