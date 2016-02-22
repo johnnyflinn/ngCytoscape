@@ -38,5 +38,10 @@
                     templateUrl: "dst/templates/events.html",
                     controller: 'eventsCtrl'
                 })
+                .state('core', {
+                    url: "/core",
+                    templateUrl: "dst/templates/core.html",
+                    controller: 'coreCtrl'
+                })
         });
 })();
