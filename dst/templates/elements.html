@@ -7,8 +7,9 @@
 </div>
 <div class="col-md-6">
     <div class="btn-group">
-        <button class="btn btn-raised btn-success" ng-click="addElement()">Add Element</button>
-        <button class="btn btn-raised btn-danger" ng-click="removeElement()">Remove Element</button>
+        <md-button class="md-primary md-raised" ng-click="addElement()">Add Element</md-button>
+        <md-button class="md-warn md-raised" ng-click="removeElement()">Remove Element</md-button>
+
     </div>
 </div>
 <span class="col-md-12">
@@ -22,6 +23,7 @@
     </div>
     <div hljs ng-show="cv.codeView.html">
         <cytoscape graph-elements="elements"></cytoscape>
+
         <button ng-click="addElement()">Add Element</button>
         <button ng-click="removeElement()">Remove Element</button>
     </div>

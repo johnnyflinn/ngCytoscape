@@ -1,0 +1,42 @@
+<h3>Layout Options</h3>
+<div class="col-md-7">
+    <div class="cy-examples well">
+        <cytoscape graph-elements="elements" graph-layout="layout" graph-style="styles"></cytoscape>
+    </div>
+</div>
+<div class="col-md-5">
+    <md-slider flex min="0" max="100" ng-model="elements.n1.data.weight" aria-label="red" id="red-slider" class></md-slider>
+    {{elements.n1.data.weight}}
+</div>
+<span class="col-md-12">
+    <p class="text-warning">See <a href="http://js.cytoscape.org/#style">http://js.cytoscape.org/#style</a> for all available style options.</p>
+   </span>
+
+<div  class="col-md-12" ng-controller="codeView as cv">
+    <div class="btn-group">
+        <button class="btn btn-raised btn-primary" ng-click="cv.switch('HTML')">HTML</button>
+        <button class="btn btn-raised btn-primary" ng-click="cv.switch('JAVASCIRPT')">JAVASCRIPT</button>
+    </div>
+    <div hljs ng-show="cv.codeView.html">
+<cytoscape graph-elements="elements" graph-layout="layout" graph-style="styles"></cytoscape>
+<md-slider flex min="0" max="100" ng-model="elements.n1.data.weight" aria-label="red" id="red-slider" class></md-slider>
+    </div>
+    <div hljs ng-show="cv.codeView.javascript">
+$scope.layout = {name:'grid'};
+$scope.styles = [
+    {
+        selector: 'node',
+            style:{
+                'height': 'data(weight)',
+                'width': 'data(weight)',
+                'background-color': 'mapData(weight, 0, 100, blue, red)'
+            }
+        }
+    ];
+    $scope.elements = {
+        n1:{data:{
+        weight: 30
+    }}
+}
+    </div>
+</div>

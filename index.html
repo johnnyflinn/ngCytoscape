@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="dst/css/bootstrap.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
     <link rel="stylesheet" href="dst/css/bootstrap-material-design.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     <link rel="stylesheet" href="dst/css/app.css">
     <style>
         .ngCytoscape{
@@ -26,9 +27,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+
             </button>
             <a class="navbar-brand" href="https://github.com/johnny-flinn/ngCytoscape">ngCytoscape</a>
         </div>
@@ -54,15 +53,13 @@
     <div class="row">
     <div class="col-md-3">
         <div class="list-group">
-            <button type="button" class="btn btn-block btn-primary" ui-sref="gettingStarted">Getting Started</button>
-            <button type="button" class="btn btn-block btn-primary" ui-sref="defaults">Defaults</button>
-            <button type="button" class="btn btn-block btn-primary" ui-sref="elements">Elements</button>
-            <button type="button" class="btn btn-block btn-primary" ui-sref="layouts">Layouts</button>
-            <button type="button" class="btn btn-block btn-primary">Styles</button>
-            <button type="button" class="btn btn-block btn-primary">Core Functionality</button>
-            <button type="button" class="btn btn-block btn-primary">Events</button>
-            <button type="button" class="btn btn-block btn-primary">Multiple Instance</button>
-            <button type="button" class="btn btn-block btn-primary">Showcase</button>
+            <md-button class="list-group-item btn-block md-primary" ui-sref="gettingStarted">Getting Started</md-button>
+            <md-button class="list-group-item btn-block md-primary" ui-sref="elements">Elements</md-button>
+            <md-button class="list-group-item btn-block md-primary" ui-sref="layouts">Layouts</md-button>
+            <md-button class="list-group-item btn-block md-primary" ui-sref="styles">Styles</md-button>
+            <md-button class="list-group-item btn-block md-primary" ui-sref="gettingStarted">Core Functionality</md-button>
+            <md-button class="list-group-item btn-block md-primary" ui-sref="gettingStarted">Events</md-button>
+            <md-button class="list-group-item btn-block md-primary" ui-sref="gettingStarted">Multiple Instance</md-button>
         </div>
     </div>
     <div class="col-md-9">
@@ -73,8 +70,12 @@
     </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
 <script src="dst/libs/angular.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
 <script src="dst/libs/cytoscape.js"></script>
 <script src="dst/libs/angular-ui-router.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
 
 <script src="dst/app.js"></script>
 <script src="dst/libs/ngCytoscape.js"></script>

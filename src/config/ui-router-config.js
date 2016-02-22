@@ -28,5 +28,10 @@
                     templateUrl: "dst/templates/layouts.html",
                     controller: 'layoutsCtrl'
                 })
+                .state('styles', {
+                    url: "/styles",
+                    templateUrl: "dst/templates/styles.html",
+                    controller: 'stylesCtrl'
+                })
         });
 })();
