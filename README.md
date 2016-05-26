@@ -25,7 +25,7 @@ npm install
 ```javascript
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/cytoscape/dist/cytoscape.js"></script>
-<script src="bower_components/ngCytoscape/dst/ngCytoscape.js">
+<script src="bower_components/ngCytoscape/dist/ngCytoscape.js">
 ```
 Include `ngCytoscape` as a dependency in your application.
 
@@ -91,7 +91,7 @@ Inject cytoData in your controller as a dependency. Obtain the cytoscape graph c
   .module('app')
   .controller('example');
   
-  example.$inject = ['$scope', 'cytoData']S
+  example.$inject = ['$scope', 'cytoData']
   
   function example($scope, cytoData){
       $scope.graph = {};
