@@ -99,7 +99,7 @@ Inject cytoData in your controller as a dependency. Obtain the cytoscape graph c
         $scope.graph = graph;
       }
   }
-}();
+})();
 ```
 Now all core functionality is available on $scope.graph
 ```javascript
