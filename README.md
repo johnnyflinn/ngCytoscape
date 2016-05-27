@@ -48,9 +48,9 @@ Controller
     motionBlur: false,
     hideEdgesOnViewport:true
    };
- 
+
    $scope.layout = {name: 'grid'}   //See http://js.cytoscape.org/#collection/layout for available layouts and options
-   
+
    $scope.elements = {
     n1:{
      group: 'nodes',
@@ -59,12 +59,12 @@ Controller
     n2:{
      group: 'nodes',
      data:{}
-    }
+	 },
     e1:{
      group:'edges',
      data:{
-      target: n1,  //Source and Target mandatory for edges.
-      source: n2
+      target: 'n1',  //Source and Target mandatory for edges.
+      source: 'n2'
      }
     }
    }
@@ -79,7 +79,7 @@ Controller
         }
     ]
   }
-}();
+})();
 ```
 
 #### cytoscape instance
@@ -90,9 +90,9 @@ Inject cytoData in your controller as a dependency. Obtain the cytoscape graph c
  angular
   .module('app')
   .controller('example');
-  
+
   example.$inject = ['$scope', 'cytoData']
-  
+
   function example($scope, cytoData){
       $scope.graph = {};
       cytoData.getGraph().then(function(graph){
