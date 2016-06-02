@@ -7,7 +7,7 @@
     graphElements.$inject = ['cytoHelpers', 'cytoElementsHelpers'];
     function graphElements(cytoHelpers, cytoElementsHelpers){
         var directive = {
-            restric: 'A',
+            restrict: 'A',
             require: '^cytoscape',
             link:linkFn
         };
