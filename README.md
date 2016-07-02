@@ -3,7 +3,7 @@ ngCytoscape
 
 A simple angular wrapper for the [Cytocape.js](http://js.cytoscape.org/) library.
 
-v0.0.5 [![Build Status](https://travis-ci.org/johnnyflinn/ngCytoscape.svg?branch=v0.0.4)](https://travis-ci.org/johnnyflinn/ngCytoscape)
+v0.0.6 [![Build Status](https://travis-ci.org/johnnyflinn/ngCytoscape.svg?branch=v0.0.4)](https://travis-ci.org/johnnyflinn/ngCytoscape)
 Master [![Build Status](https://travis-ci.org/johnnyflinn/ngCytoscape.svg?branch=master)](https://travis-ci.org/johnnyflinn/ngCytoscape)
 
 
