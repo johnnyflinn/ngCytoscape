@@ -49,7 +49,7 @@
             }
             if(toAdd.length !== 0){
                 graph.add(toAdd);
-                graph.layout(_scope.graphLayout || {name:'grid'});
+                //graph.layout(_scope.graphLayout || {name:'grid'});
             }
             if(removeCollection && removeCollection.length !== 0){
                 graph.remove(removeCollection);
