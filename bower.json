@@ -1,7 +1,7 @@
 {
   "name": "ngCytoscape",
   "description": "Angular directive for cytoscapejs",
-  "main": "ngCytoscape.js",
+  "main": "./dist/ngCytoscape.js",
   "authors": [
     "Johnny Flinn <johnny.flinn@cox.net>"
   ],
