@@ -44,7 +44,8 @@
                 graphElements: '=',
                 graphLayout: '=',
                 graphOptions: '=',
-                graphStyle: '='
+                graphStyle: '=',
+                graphReady: '='
             },
             template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
@@ -79,6 +80,10 @@
                 }
             }
 
+            if(isDefined(scope.graphReady)){
+              cy.ready(scope.graphReady);
+            }
+
             scope.$watch(function(){
                 return element[0].offsetHeight;
             }, function(nv,ov){
@@ -105,6 +110,7 @@
         }
     }
 })();
+
 (function(){
     'use strict';
     angular
