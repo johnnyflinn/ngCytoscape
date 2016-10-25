@@ -32,7 +32,7 @@ Include `ngCytoscape` as a dependency in your application.
 ##Basic Example
 HTML
 ```javascript
- <cytoscape graph-options="options" graph-elements="elements" graph-layout="layout" graph-style="style"></cytoscape>
+ <cytoscape graph-options="options" graph-elements="elements" graph-layout="layout" graph-style="style" graph-ready="cy_graph_ready"></cytoscape>
 ```
 Controller
 ```javascript
@@ -50,6 +50,10 @@ Controller
    };
 
    $scope.layout = {name: 'grid'}   //See http://js.cytoscape.org/#collection/layout for available layouts and options
+
+   $scope.cy_graph_ready = function(evt){
+      console.log('graph ready to be interacted with: ', evt);
+   }
 
    $scope.elements = {
     n1:{

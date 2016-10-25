@@ -44,7 +44,8 @@
                 graphElements: '=',
                 graphLayout: '=',
                 graphOptions: '=',
-                graphStyle: '='
+                graphStyle: '=',
+                graphReady: '='
             },
             template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
@@ -77,6 +78,10 @@
                 if(isDefined(scope.graphLayout) && !isEmpty(scope.graphLayout)){
                     cy.layout(scope.graphLayout);
                 }
+            }
+
+            if(isDefined(scope.graphReady)){
+              cy.ready(scope.graphReady);
             }
 
             scope.$watch(function(){
