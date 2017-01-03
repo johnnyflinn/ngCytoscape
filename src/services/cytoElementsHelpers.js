@@ -72,12 +72,13 @@
                 toUpdate: []
             };
             if (Object.keys(oldEles).length !== Object.keys(newEles).length) {
-                angular.forEach(oldEles, function (oEle, oIndex) {
-                    if (!newEles[oIndex]) {
-                        diff.toRemove[oIndex] = {};
-                        angular.extend(diff.toRemove[oIndex], oEle);
-                    }
-                });
+                for(var oIndex=0; oIndex<oldEles.length; oIndex++) {
+                  if (!newEles[oIndex] || newEles[oIndex].data.id !== oldEles[oIndex].data.id) {
+                    diff.toRemove[oIndex] = {};
+                    angular.extend(diff.toRemove[oIndex], oldEles[oIndex]);
+                    break;
+                  }
+                }
                 angular.forEach(newEles, function (nEle, nIndex) {
                     if (!oldEles[nIndex]) {
                         diff.toAdd[nIndex] = {};
