@@ -44,7 +44,8 @@
                 graphElements: '=',
                 graphLayout: '=',
                 graphOptions: '=',
-                graphStyle: '='
+                graphStyle: '=',
+                graphReady: '='
             },
             template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
@@ -79,6 +80,10 @@
                 }
             }
 
+            if(isDefined(scope.graphReady)){
+              cy.ready(scope.graphReady);
+            }
+
             scope.$watch(function(){
                 return element[0].offsetHeight;
             }, function(nv,ov){
@@ -105,6 +110,7 @@
         }
     }
 })();
+
 (function(){
     'use strict';
     angular
@@ -114,7 +120,7 @@
     graphElements.$inject = ['cytoHelpers', 'cytoElementsHelpers'];
     function graphElements(cytoHelpers, cytoElementsHelpers){
         var directive = {
-            restric: 'A',
+            restrict: 'A',
             require: '^cytoscape',
             link:linkFn
         };
@@ -137,6 +143,7 @@
         }
     }
 })();
+
 (function(){
     'use strict';
     angular
@@ -276,7 +283,7 @@
             }
             if(toAdd.length !== 0){
                 graph.add(toAdd);
-                graph.layout(_scope.graphLayout || {name:'grid'});
+                //graph.layout(_scope.graphLayout || {name:'grid'});
             }
             if(removeCollection && removeCollection.length !== 0){
                 graph.remove(removeCollection);
@@ -299,12 +306,13 @@
                 toUpdate: []
             };
             if (Object.keys(oldEles).length !== Object.keys(newEles).length) {
-                angular.forEach(oldEles, function (oEle, oIndex) {
-                    if (!newEles[oIndex]) {
-                        diff.toRemove[oIndex] = {};
-                        angular.extend(diff.toRemove[oIndex], oEle);
-                    }
-                });
+                for(var oIndex=0; oIndex<oldEles.length; oIndex++) {
+                  if (!newEles[oIndex] || newEles[oIndex].data.id !== oldEles[oIndex].data.id) {
+                    diff.toRemove[oIndex] = {};
+                    angular.extend(diff.toRemove[oIndex], oldEles[oIndex]);
+                    break;
+                  }
+                }
                 angular.forEach(newEles, function (nEle, nIndex) {
                     if (!oldEles[nIndex]) {
                         diff.toAdd[nIndex] = {};

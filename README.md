@@ -13,10 +13,10 @@ Visit the [Demo Page](http://johnnyflinn.github.io/ngCytoscape) for detailed set
 
 Dependencies
 -----------
-AngularJs
-Cytoscape.js
+* AngularJs
+* Cytoscape.js
 
-##Installation
+## Installation
 
 ```javascript
 bower install ngCytoscape
@@ -28,8 +28,11 @@ npm install
 <script src="bower_components/ngCytoscape/dist/ngCytoscape.js">
 ```
 Include `ngCytoscape` as a dependency in your application.
+```javascript
+angular.module('myApp', ['nyCytoscape']);
+```
 
-##Basic Example
+## Basic Example
 HTML
 ```javascript
  <cytoscape graph-options="options" graph-elements="elements" graph-layout="layout" graph-style="style" graph-ready="cy_graph_ready"></cytoscape>
@@ -86,7 +89,7 @@ Controller
 })();
 ```
 
-#### cytoscape instance
+### cytoscape instance
 Inject cytoData in your controller as a dependency. Obtain the cytoscape graph core by making a call to cytoData.getGraph().   This will return a promise with the graph instance.  If you have multiple graphs, they must contain an id property.  Then you can pass the id to cytoData.getGraph('id') to obtain the corresponding graph instance.
 ```javascript
 //Single Graph Instance

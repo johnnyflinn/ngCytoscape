@@ -31,11 +31,10 @@ gulp.task('scripts', function() {
         'src/services/cytoLayoutDefaults.js'
         ])
         .pipe(concat('ngCytoscape.js'))
-        .pipe(gulp.dest('dst'))
+        .pipe(gulp.dest('dist'))
         .pipe(rename('ngCytoscape.min.js'))
         .pipe(uglify())
-
-        .pipe(gulp.dest('dst'));
+        .pipe(gulp.dest('dist'));
 });
 gulp.task('test', function (done) {
     new Server({
