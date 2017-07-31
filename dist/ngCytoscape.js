@@ -81,6 +81,12 @@
                 }
             }
 
+            if (isDefined(scope.graphExtentions)) {
+                angular.forEach(scope.graphExtentions, function(ele, index){
+                    cy[ele.extenstion](ele.options);
+                });
+            }
+
             if(isDefined(scope.graphReady)){
               cy.ready(scope.graphReady);
             }
