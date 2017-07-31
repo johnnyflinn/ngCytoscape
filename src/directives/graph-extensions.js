@@ -14,7 +14,7 @@
                     graph = cy;
                 });
                 var _scope = cntrlFn._getCytoscapeScope();
-                _scope.$watch(function(){
+                _scope.$watchCollection(function(){
                     return _scope.graphExtensions;
                 }, function(nv,ov){
                     if(nv !== ov){
