@@ -23,6 +23,9 @@
                             var defaults = cytoGraphDefaults.getDefaults(attrs.id);
                             if (isDefined(defaults.extensions)) {
                                 angular.forEach(defaults.extensions, function(ele, index){
+                                    var edgehandles = require(ele.require);
+                                    edgehandles(graph);
+
                                     graph[ele.extenstion](ele.options);
                                 });
                             }
