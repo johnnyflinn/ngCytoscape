@@ -7,7 +7,7 @@
         .factory('CytoscapeGraph', CytoscapeGraph);
 
     function CytoscapeGraph(){
-        var CytoscapeGraph =  function(element,defaults, styles){
+        var CytoscapeGraph =  function(element, defaults, styles){
             var cyObj = {
                 container:element
             };

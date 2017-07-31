@@ -46,7 +46,7 @@
                 graphOptions: '=',
                 graphStyle: '=',
                 graphReady: '=',
-                graphExtentions: "="
+                graphExtensions: "="
             },
             template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
