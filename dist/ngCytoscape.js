@@ -45,7 +45,8 @@
                 graphLayout: '=',
                 graphOptions: '=',
                 graphStyle: '=',
-                graphReady: '='
+                graphReady: '=',
+                graphExtentions: "="
             },
             template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
@@ -67,7 +68,7 @@
         function linkFn(scope,element,attrs,ctrlFn){
             var isDefined = cytoHelpers.isDefined;
             var isEmpty = cytoHelpers.isEmpty;
-            cytoGraphDefaults.setDefaults(scope.graphOptions, scope.graphLayout, attrs.id, scope.graphStyle);
+            cytoGraphDefaults.setDefaults(scope.graphOptions, scope.graphLayout, attrs.id, scope.graphStyle, scope.graphExtentions);
             scope.graphId =  attrs.id;
             var cy = new CytoscapeGraph(element[0], cytoGraphDefaults.getGraphCreationDefaults(attrs.id));
             cytoEvents.setEvents(cy);
@@ -204,6 +205,43 @@
                     if(nv !== ov){
                         if(graph)
                         graph.style(nv);
+                    }
+                },true);
+            }
+        };
+        return directive;
+    }
+})();
+
+(function(){
+    'use strict';
+    angular
+        .module('ngCytoscape')
+        .directive('graphExtensions', graphExtensions);
+    graphExtensions.$inject = ['cytoGraphDefaults'];
+    function graphExtensions(cytoGraphDefaults){
+        var directive = {
+            restrict: 'A',
+            require: '^cytoscape',
+            link: function(scope,elem,attrs,cntrlFn){
+                var graph = {};
+                cntrlFn._getCytoscapeGraph().then(function(cy){
+                    graph = cy;
+                });
+                var _scope = cntrlFn._getCytoscapeScope();
+                _scope.$watch(function(){
+                    return _scope.graphExtensions;
+                }, function(nv,ov){
+                    if(nv !== ov){
+                        if(graph) {
+                            //graph.style(nv);
+                            var defaults = cytoGraphDefaults.getDefaults(attrs.id);
+                            if (isDefined(defaults.extensions)) {
+                                angular.forEach(defaults.extensions, function(ele, index){
+                                    graph[ele.extenstion](ele.options);
+                                });
+                            }
+                        }
                     }
                 },true);
             }
@@ -598,7 +636,7 @@
             return graphDefaults;
         }
 
-        function setDefaults(userDefaults, userLayout, scopeId, userStyle) {
+        function setDefaults(userDefaults, userLayout, scopeId, userStyle, extensions) {
             var newDefaults = _getDefaults();
             if (isDefined(userDefaults)) {
                 newDefaults.zoom = isDefined(userDefaults.zoom) ? userDefaults.zoom : newDefaults.zoom;
@@ -631,6 +669,8 @@
             }
 
             newDefaults.style = isDefined(userStyle) ? userStyle : {};
+
+            newDefaults.extensions = isDefined(extensions) ? extensions : [];
 
             var graphId = obtainEffectiveGraphId(defaults, scopeId);
             defaults[graphId] = newDefaults;
