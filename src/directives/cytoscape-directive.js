@@ -81,7 +81,7 @@
                 }
             }
 
-            if (isDefined(scope.graphExtentions)) {
+            if (isDefined(scope.graphExtensions)) {
                 angular.forEach(scope.graphExtentions, function(ele, index){
                     cy[ele.extenstion](ele.options);
                 });
