@@ -68,7 +68,7 @@
         function linkFn(scope,element,attrs,ctrlFn){
             var isDefined = cytoHelpers.isDefined;
             var isEmpty = cytoHelpers.isEmpty;
-            cytoGraphDefaults.setDefaults(scope.graphOptions, scope.graphLayout, attrs.id, scope.graphStyle, scope.graphExtentions);
+            cytoGraphDefaults.setDefaults(scope.graphOptions, scope.graphLayout, attrs.id, scope.graphStyle, scope.graphExtensions);
             scope.graphId =  attrs.id;
             var cy = new CytoscapeGraph(element[0], cytoGraphDefaults.getGraphCreationDefaults(attrs.id));
             cytoEvents.setEvents(cy);
