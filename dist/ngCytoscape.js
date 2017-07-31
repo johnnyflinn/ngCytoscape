@@ -83,7 +83,9 @@
 
             if (isDefined(scope.graphExtensions)) {
                 angular.forEach(scope.graphExtensions, function(ele, index){
-                    cy[ele.extension](ele.options);
+                    var reg = require(ele.require);
+                    reg(cy);
+                    cy[ele.extenstion](ele.options);
                 });
             }
 
@@ -243,9 +245,8 @@
                             var defaults = cytoGraphDefaults.getDefaults(attrs.id);
                             if (isDefined(defaults.extensions)) {
                                 angular.forEach(defaults.extensions, function(ele, index){
-                                    var edgehandles = require(ele.require);
-                                    edgehandles(graph);
-
+                                    var reg = require(ele.require);
+                                    reg(graph);
                                     graph[ele.extenstion](ele.options);
                                 });
                             }
