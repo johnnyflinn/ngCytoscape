@@ -212,7 +212,6 @@
         return directive;
     }
 })();
-
 (function(){
     'use strict';
     angular
