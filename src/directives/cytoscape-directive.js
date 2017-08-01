@@ -83,9 +83,8 @@
 
             if (isDefined(scope.graphExtensions)) {
                 angular.forEach(scope.graphExtensions, function(ele, index){
-                    var reg = require(ele.require);
-                    reg(cy);
-                    cy[ele.extenstion](ele.options);
+                    var ext = ele.extenstion;
+                    cy[ext](ele.options);
                 });
             }
 
