@@ -83,8 +83,16 @@
 
             if (isDefined(scope.graphExtensions)) {
                 angular.forEach(scope.graphExtensions, function(ele, index){
-                    var ext = ele.extenstion;
-                    cy[ext](ele.options);
+                    //var ext = ele.extensions;
+                    //cy[ext](ele.options);
+                    cy.edgehandles({
+                    	toggleOffOnLeave: true,
+                    	handleNodes: "node",
+                    	handleSize: 10,
+                    	edgeType: function() {
+                    		return 'flat';
+                    	}
+                    });
                 });
             }
 
