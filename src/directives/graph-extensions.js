@@ -23,9 +23,7 @@
                             var defaults = cytoGraphDefaults.getDefaults(attrs.id);
                             if (isDefined(defaults.extensions)) {
                                 angular.forEach(defaults.extensions, function(ele, index){
-                                    var reg = require(ele.require);
-                                    reg(graph);
-                                    graph[ele.extenstion](ele.options);
+                                    graph[ele.extension](ele.options);
                                 });
                             }
                         }

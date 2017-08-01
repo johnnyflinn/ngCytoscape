@@ -83,16 +83,7 @@
 
             if (isDefined(scope.graphExtensions)) {
                 angular.forEach(scope.graphExtensions, function(ele, index){
-                    //var ext = ele.extensions;
-                    //cy[ext](ele.options);
-                    cy.edgehandles({
-                    	toggleOffOnLeave: true,
-                    	handleNodes: "node",
-                    	handleSize: 10,
-                    	edgeType: function() {
-                    		return 'flat';
-                    	}
-                    });
+                    cy[ele.extension](ele.options);
                 });
             }
 
@@ -252,9 +243,7 @@
                             var defaults = cytoGraphDefaults.getDefaults(attrs.id);
                             if (isDefined(defaults.extensions)) {
                                 angular.forEach(defaults.extensions, function(ele, index){
-                                    var reg = require(ele.require);
-                                    reg(graph);
-                                    graph[ele.extenstion](ele.options);
+                                    graph[ele.extension](ele.options);
                                 });
                             }
                         }
@@ -276,10 +265,10 @@
     function CytoscapeGraph(){
         var CytoscapeGraph =  function(element, defaults, styles){
             var cyObj = {
-                container:element
+                container: element
             };
             if(angular.isDefined(defaults) && defaults !== null){
-                angular.extend(cyObj,defaults);
+                angular.extend(cyObj, defaults);
             }
             return cytoscape(cyObj);
         };

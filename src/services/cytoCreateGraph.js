@@ -9,10 +9,10 @@
     function CytoscapeGraph(){
         var CytoscapeGraph =  function(element, defaults, styles){
             var cyObj = {
-                container:element
+                container: element
             };
             if(angular.isDefined(defaults) && defaults !== null){
-                angular.extend(cyObj,defaults);
+                angular.extend(cyObj, defaults);
             }
             return cytoscape(cyObj);
         };
