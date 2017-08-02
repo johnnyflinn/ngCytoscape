@@ -84,7 +84,7 @@
             if (isDefined(scope.graphExtensions)) {
                 angular.forEach(scope.graphExtensions, function(ele, index){
                     // cy[ele.extension](ele.options);
-                    cytoHelpers.executeFunctionByName(ele.extension, cy, ele.options);
+                    cytoHelpers.executeFunctionByName(ele.extension, 'cytoscape', ele.options);
                 });
             }
 
@@ -245,7 +245,7 @@
                             if (isDefined(defaults.extensions)) {
                                 angular.forEach(defaults.extensions, function(ele, index){
                                     //graph[ele.extension](ele.options);
-                                    cytoHelpers.executeFunctionByName(ele.extension, graph, ele.options);
+                                    cytoHelpers.executeFunctionByName(ele.extension, 'cytoscape', ele.options);
                                 });
                             }
                         }
