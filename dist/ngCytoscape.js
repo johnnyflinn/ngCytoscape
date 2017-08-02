@@ -231,6 +231,7 @@
             require: '^cytoscape',
             link: function(scope, elem, attrs, cntrlFn){
                 var graph = {};
+                var isDefined = cytoHelpers.isDefined;
                 cntrlFn._getCytoscapeGraph().then(function(cy){
                     graph = cy;
                 });
