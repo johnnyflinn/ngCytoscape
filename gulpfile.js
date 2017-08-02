@@ -47,6 +47,6 @@ gulp.task('test', function (done) {
 gulp.task('watch', function() {
     gulp.watch(['src/services/*.js', 'src/directives/*.js'], ['lint', 'scripts']);
 });
-gulp.task('build', ['lint', 'scripts']);
+gulp.task('build', ['lint','test','scripts']);
 // Default Task
 gulp.task('dev', ['lint', 'scripts', 'watch']);
