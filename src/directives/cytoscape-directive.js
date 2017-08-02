@@ -83,7 +83,8 @@
 
             if (isDefined(scope.graphExtensions)) {
                 angular.forEach(scope.graphExtensions, function(ele, index){
-                    cy[ele.extension](ele.options);
+                    // cy[ele.extension](ele.options);
+                    cytoHelpers._executeFunctionByName(ele.extension, cy, ele.options);
                 });
             }
 
