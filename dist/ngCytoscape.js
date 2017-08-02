@@ -83,7 +83,6 @@
 
             if (isDefined(scope.graphExtensions)) {
                 angular.forEach(scope.graphExtensions, function(ele, index){
-                    // cy[ele.extension](ele.options);
                     cytoHelpers.executeFunctionByName(ele.extension, cy, ele.options);
                 });
             }
@@ -243,12 +242,11 @@
                         if(graph) {
                             //graph.style(nv);
                             var defaults = cytoGraphDefaults.getDefaults(attrs.id);
-                            if (isDefined(defaults.extensions)) {
-                                angular.forEach(defaults.extensions, function(ele, index){
-                                    //graph[ele.extension](ele.options);
-                                    cytoHelpers.executeFunctionByName(ele.extension, graph, ele.options);
-                                });
-                            }
+                            //if (isDefined(defaults.extensions)) {
+                            graph.extensions = nv;
+                            angular.forEach(graph.extensions, function(ele, index){
+                                cytoHelpers.executeFunctionByName(ele.extension, graph, ele.options);
+                            });
                         }
                     }
                 },true);
