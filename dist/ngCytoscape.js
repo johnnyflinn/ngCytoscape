@@ -223,12 +223,12 @@
     angular
         .module('ngCytoscape')
         .directive('graphExtensions', graphExtensions);
-    graphExtensions.$inject = ['cytoGraphDefaults'];
-    function graphExtensions(cytoGraphDefaults){
+    graphExtensions.$inject = ['cytoGraphDefaults', 'cytoHelpers'];
+    function graphExtensions(cytoGraphDefaults, cytoHelpers){
         var directive = {
             restrict: 'A',
             require: '^cytoscape',
-            link: function(scope,elem,attrs,cntrlFn){
+            link: function(scope, elem, attrs, cntrlFn){
                 var graph = {};
                 cntrlFn._getCytoscapeGraph().then(function(cy){
                     graph = cy;
@@ -243,7 +243,8 @@
                             var defaults = cytoGraphDefaults.getDefaults(attrs.id);
                             if (isDefined(defaults.extensions)) {
                                 angular.forEach(defaults.extensions, function(ele, index){
-                                    graph[ele.extension](ele.options);
+                                    //graph[ele.extension](ele.options);
+                                    cytoHelpers._executeFunctionByName(ele.extension, graph, ele.options);
                                 });
                             }
                         }
@@ -695,6 +696,39 @@
         var _errorHeader = '[AngularJS - Cytoscape] ';
         var _copy = angular.copy;
         var _clone = _copy;
+
+        function _executeFunctionByName( functionName, context /*, args */ ) {
+            var args, namespaces, func;
+
+            if( typeof functionName === 'undefined' ) { throw 'function name not specified'; }
+
+            if( typeof eval( functionName ) !== 'function' ) { throw functionName + ' is not a function'; }
+
+            if( typeof context !== 'undefined' ) {
+                if( typeof context === 'object' && context instanceof Array === false ) {
+                    if( typeof context[ functionName ] !== 'function' ) {
+                        throw context + '.' + functionName + ' is not a function';
+                    }
+                    args = Array.prototype.slice.call( arguments, 2 );
+
+                } else {
+                    args = Array.prototype.slice.call( arguments, 1 );
+                    context = window;
+                }
+
+            } else {
+                context = window;
+            }
+
+            namespaces = functionName.split( "." );
+            func = namespaces.pop();
+
+            for( var i = 0; i < namespaces.length; i++ ) {
+                context = context[ namespaces[ i ] ];
+            }
+
+            return context[ func ].apply( context, args );
+        }
 
         function _obtainEffectiveGraphId(d, graphId) {
             var id;

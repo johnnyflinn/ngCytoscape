@@ -3,12 +3,12 @@
     angular
         .module('ngCytoscape')
         .directive('graphExtensions', graphExtensions);
-    graphExtensions.$inject = ['cytoGraphDefaults'];
-    function graphExtensions(cytoGraphDefaults){
+    graphExtensions.$inject = ['cytoGraphDefaults', 'cytoHelpers'];
+    function graphExtensions(cytoGraphDefaults, cytoHelpers){
         var directive = {
             restrict: 'A',
             require: '^cytoscape',
-            link: function(scope,elem,attrs,cntrlFn){
+            link: function(scope, elem, attrs, cntrlFn){
                 var graph = {};
                 cntrlFn._getCytoscapeGraph().then(function(cy){
                     graph = cy;
@@ -23,7 +23,8 @@
                             var defaults = cytoGraphDefaults.getDefaults(attrs.id);
                             if (isDefined(defaults.extensions)) {
                                 angular.forEach(defaults.extensions, function(ele, index){
-                                    graph[ele.extension](ele.options);
+                                    //graph[ele.extension](ele.options);
+                                    cytoHelpers._executeFunctionByName(ele.extension, graph, ele.options);
                                 });
                             }
                         }

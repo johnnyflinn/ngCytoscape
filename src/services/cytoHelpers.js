@@ -10,6 +10,39 @@
         var _copy = angular.copy;
         var _clone = _copy;
 
+        function _executeFunctionByName( functionName, context /*, args */ ) {
+            var args, namespaces, func;
+
+            if( typeof functionName === 'undefined' ) { throw 'function name not specified'; }
+
+            if( typeof eval( functionName ) !== 'function' ) { throw functionName + ' is not a function'; }
+
+            if( typeof context !== 'undefined' ) {
+                if( typeof context === 'object' && context instanceof Array === false ) {
+                    if( typeof context[ functionName ] !== 'function' ) {
+                        throw context + '.' + functionName + ' is not a function';
+                    }
+                    args = Array.prototype.slice.call( arguments, 2 );
+
+                } else {
+                    args = Array.prototype.slice.call( arguments, 1 );
+                    context = window;
+                }
+
+            } else {
+                context = window;
+            }
+
+            namespaces = functionName.split( "." );
+            func = namespaces.pop();
+
+            for( var i = 0; i < namespaces.length; i++ ) {
+                context = context[ namespaces[ i ] ];
+            }
+
+            return context[ func ].apply( context, args );
+        }
+
         function _obtainEffectiveGraphId(d, graphId) {
             var id;
             var i;
