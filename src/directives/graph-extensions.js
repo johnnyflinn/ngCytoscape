@@ -24,7 +24,7 @@
                             if (isDefined(defaults.extensions)) {
                                 angular.forEach(defaults.extensions, function(ele, index){
                                     //graph[ele.extension](ele.options);
-                                    cytoHelpers._executeFunctionByName(ele.extension, graph, ele.options);
+                                    cytoHelpers.executeFunctionByName(ele.extension, graph, ele.options);
                                 });
                             }
                         }

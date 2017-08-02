@@ -159,6 +159,8 @@
                 return deferred.promise;
             },
 
+            executeFunctionByName: _executeFunctionByName,
+
             obtainEffectiveGraphId: _obtainEffectiveGraphId,
 
             getDefer: function(d, graphId) {
