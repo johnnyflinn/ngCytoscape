@@ -15,7 +15,7 @@
 
             if( typeof functionName === 'undefined' ) { throw 'function name not specified'; }
 
-            if( typeof eval( functionName ) !== 'function' ) { throw functionName + ' is not a function'; }
+            //if( typeof eval( functionName ) !== 'function' ) { throw functionName + ' is not a function'; }
 
             if( typeof context !== 'undefined' ) {
                 if( typeof context === 'object' && context instanceof Array === false ) {

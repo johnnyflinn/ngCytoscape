@@ -84,7 +84,7 @@
             if (isDefined(scope.graphExtensions)) {
                 angular.forEach(scope.graphExtensions, function(ele, index){
                     // cy[ele.extension](ele.options);
-                    cytoHelpers.executeFunctionByName(cy[ele.extension], ele.options);
+                    cytoHelpers.executeFunctionByName(ele.extension, cy, ele.options);
                 });
             }
 
@@ -245,7 +245,7 @@
                             if (isDefined(defaults.extensions)) {
                                 angular.forEach(defaults.extensions, function(ele, index){
                                     //graph[ele.extension](ele.options);
-                                    cytoHelpers.executeFunctionByName(graph[ele.extension], ele.options);
+                                    cytoHelpers.executeFunctionByName(ele.extension, graph, ele.options);
                                 });
                             }
                         }
@@ -703,7 +703,7 @@
 
             if( typeof functionName === 'undefined' ) { throw 'function name not specified'; }
 
-            if( typeof eval( functionName ) !== 'function' ) { throw functionName + ' is not a function'; }
+            //if( typeof eval( functionName ) !== 'function' ) { throw functionName + ' is not a function'; }
 
             if( typeof context !== 'undefined' ) {
                 if( typeof context === 'object' && context instanceof Array === false ) {
