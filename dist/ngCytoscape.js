@@ -705,19 +705,18 @@
 
             //if( typeof eval( functionName ) !== 'function' ) { throw functionName + ' is not a function'; }
 
-            if( typeof context !== 'undefined' ) {
-                if( typeof context === 'object' && context instanceof Array === false ) {
-                    if( typeof context[ functionName ] !== 'function' ) {
-                        throw context + '.' + functionName + ' is not a function';
-                    }
-                    args = Array.prototype.slice.call( arguments, 2 );
+            if( typeof context === 'undefined' ) {
+                context = window;
+            }
 
-                } else {
-                    args = Array.prototype.slice.call( arguments, 1 );
-                    context = window;
+            if( typeof context === 'object' && context instanceof Array === false ) {
+                if( typeof context[ functionName ] !== 'function' ) {
+                    throw context + '.' + functionName + ' is not a function';
                 }
+                args = Array.prototype.slice.call( arguments, 2 );
 
             } else {
+                args = Array.prototype.slice.call( arguments, 1 );
                 context = window;
             }
 
