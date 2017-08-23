@@ -45,7 +45,8 @@
                 graphLayout: '=',
                 graphOptions: '=',
                 graphStyle: '=',
-                graphReady: '='
+                graphReady: '=',
+                graphExtensions: "="
             },
             template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
@@ -67,7 +68,7 @@
         function linkFn(scope,element,attrs,ctrlFn){
             var isDefined = cytoHelpers.isDefined;
             var isEmpty = cytoHelpers.isEmpty;
-            cytoGraphDefaults.setDefaults(scope.graphOptions, scope.graphLayout, attrs.id, scope.graphStyle);
+            cytoGraphDefaults.setDefaults(scope.graphOptions, scope.graphLayout, attrs.id, scope.graphStyle, scope.graphExtensions);
             scope.graphId =  attrs.id;
             var cy = new CytoscapeGraph(element[0], cytoGraphDefaults.getGraphCreationDefaults(attrs.id));
             cytoEvents.setEvents(cy);
@@ -78,6 +79,12 @@
                 if(isDefined(scope.graphLayout) && !isEmpty(scope.graphLayout)){
                     cy.layout(scope.graphLayout);
                 }
+            }
+
+            if (isDefined(scope.graphExtensions)) {
+                angular.forEach(scope.graphExtensions, function(ele, index){
+                    cytoHelpers.executeFunctionByName(ele.extension, cy, ele.options);
+                });
             }
 
             if(isDefined(scope.graphReady)){
@@ -211,6 +218,43 @@
         return directive;
     }
 })();
+(function(){
+    'use strict';
+    angular
+        .module('ngCytoscape')
+        .directive('graphExtensions', graphExtensions);
+    graphExtensions.$inject = ['cytoGraphDefaults', 'cytoHelpers'];
+    function graphExtensions(cytoGraphDefaults, cytoHelpers){
+        var directive = {
+            restrict: 'A',
+            require: '^cytoscape',
+            link: function(scope, elem, attrs, cntrlFn){
+                var graph = {};
+                var isDefined = cytoHelpers.isDefined;
+                cntrlFn._getCytoscapeGraph().then(function(cy){
+                    graph = cy;
+                });
+                var _scope = cntrlFn._getCytoscapeScope();
+                _scope.$watchCollection(function(){
+                    return _scope.graphExtensions;
+                }, function(nv,ov){
+                    if(nv !== ov){
+                        if(graph) {
+                            //graph.style(nv);
+                            var defaults = cytoGraphDefaults.getDefaults(attrs.id);
+                            //if (isDefined(defaults.extensions)) {
+                            graph.extensions = nv;
+                            angular.forEach(graph.extensions, function(ele, index){
+                                cytoHelpers.executeFunctionByName(ele.extension, graph, ele.options);
+                            });
+                        }
+                    }
+                },true);
+            }
+        };
+        return directive;
+    }
+})();
 
 (function(){
     'use strict';
@@ -220,12 +264,12 @@
         .factory('CytoscapeGraph', CytoscapeGraph);
 
     function CytoscapeGraph(){
-        var CytoscapeGraph =  function(element,defaults, styles){
+        var CytoscapeGraph =  function(element, defaults, styles){
             var cyObj = {
-                container:element
+                container: element
             };
             if(angular.isDefined(defaults) && defaults !== null){
-                angular.extend(cyObj,defaults);
+                angular.extend(cyObj, defaults);
             }
             return cytoscape(cyObj);
         };
@@ -598,7 +642,7 @@
             return graphDefaults;
         }
 
-        function setDefaults(userDefaults, userLayout, scopeId, userStyle) {
+        function setDefaults(userDefaults, userLayout, scopeId, userStyle, extensions) {
             var newDefaults = _getDefaults();
             if (isDefined(userDefaults)) {
                 newDefaults.zoom = isDefined(userDefaults.zoom) ? userDefaults.zoom : newDefaults.zoom;
@@ -632,6 +676,8 @@
 
             newDefaults.style = isDefined(userStyle) ? userStyle : {};
 
+            newDefaults.extensions = isDefined(extensions) ? extensions : [];
+
             var graphId = obtainEffectiveGraphId(defaults, scopeId);
             defaults[graphId] = newDefaults;
             return newDefaults;
@@ -650,6 +696,38 @@
         var _errorHeader = '[AngularJS - Cytoscape] ';
         var _copy = angular.copy;
         var _clone = _copy;
+
+        function _executeFunctionByName( functionName, context /*, args */ ) {
+            var args, namespaces, func;
+
+            if( typeof functionName === 'undefined' ) { throw 'function name not specified'; }
+
+            //if( typeof eval( functionName ) !== 'function' ) { throw functionName + ' is not a function'; }
+
+            if( typeof context === 'undefined' ) {
+                context = window;
+            }
+
+            if( typeof context === 'object' && context instanceof Array === false ) {
+                if( typeof context[ functionName ] !== 'function' ) {
+                    throw context + '.' + functionName + ' is not a function';
+                }
+                args = Array.prototype.slice.call( arguments, 2 );
+
+            } else {
+                args = Array.prototype.slice.call( arguments, 1 );
+                context = window;
+            }
+
+            namespaces = functionName.split( "." );
+            func = namespaces.pop();
+
+            for( var i = 0; i < namespaces.length; i++ ) {
+                context = context[ namespaces[ i ] ];
+            }
+
+            return context[ func ].apply( context, args );
+        }
 
         function _obtainEffectiveGraphId(d, graphId) {
             var id;
@@ -766,6 +844,8 @@
                 doChunk();
                 return deferred.promise;
             },
+
+            executeFunctionByName: _executeFunctionByName,
 
             obtainEffectiveGraphId: _obtainEffectiveGraphId,
 

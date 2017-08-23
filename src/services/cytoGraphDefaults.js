@@ -96,7 +96,7 @@
             return graphDefaults;
         }
 
-        function setDefaults(userDefaults, userLayout, scopeId, userStyle) {
+        function setDefaults(userDefaults, userLayout, scopeId, userStyle, extensions) {
             var newDefaults = _getDefaults();
             if (isDefined(userDefaults)) {
                 newDefaults.zoom = isDefined(userDefaults.zoom) ? userDefaults.zoom : newDefaults.zoom;
@@ -129,6 +129,8 @@
             }
 
             newDefaults.style = isDefined(userStyle) ? userStyle : {};
+
+            newDefaults.extensions = isDefined(extensions) ? extensions : [];
 
             var graphId = obtainEffectiveGraphId(defaults, scopeId);
             defaults[graphId] = newDefaults;

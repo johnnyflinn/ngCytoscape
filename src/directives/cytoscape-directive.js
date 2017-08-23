@@ -45,7 +45,8 @@
                 graphLayout: '=',
                 graphOptions: '=',
                 graphStyle: '=',
-                graphReady: '='
+                graphReady: '=',
+                graphExtensions: "="
             },
             template: '<div class="ngCytoscape"></div>',
             controller: ctrlFn,
@@ -67,7 +68,7 @@
         function linkFn(scope,element,attrs,ctrlFn){
             var isDefined = cytoHelpers.isDefined;
             var isEmpty = cytoHelpers.isEmpty;
-            cytoGraphDefaults.setDefaults(scope.graphOptions, scope.graphLayout, attrs.id, scope.graphStyle);
+            cytoGraphDefaults.setDefaults(scope.graphOptions, scope.graphLayout, attrs.id, scope.graphStyle, scope.graphExtensions);
             scope.graphId =  attrs.id;
             var cy = new CytoscapeGraph(element[0], cytoGraphDefaults.getGraphCreationDefaults(attrs.id));
             cytoEvents.setEvents(cy);
@@ -78,6 +79,12 @@
                 if(isDefined(scope.graphLayout) && !isEmpty(scope.graphLayout)){
                     cy.layout(scope.graphLayout);
                 }
+            }
+
+            if (isDefined(scope.graphExtensions)) {
+                angular.forEach(scope.graphExtensions, function(ele, index){
+                    cytoHelpers.executeFunctionByName(ele.extension, cy, ele.options);
+                });
             }
 
             if(isDefined(scope.graphReady)){

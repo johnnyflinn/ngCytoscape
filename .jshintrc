@@ -9,6 +9,9 @@
     "afterEach": false,
     "module": false,
     "inject": false,
-    "spyOn": true
+    "spyOn": true,
+    "console": true,
+    "xit" : true,
+    "xdescribe": true
   }
 }

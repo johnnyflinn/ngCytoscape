@@ -22,6 +22,7 @@ gulp.task('scripts', function() {
         'src/directives/graph-elements.js',
         'src/directives/graph-layout.js',
         'src/directives/graph-style.js',
+        'src/directives/graph-extensions.js',
         'src/services/cytoCreateGraph.js',
         'src/services/cytoElementsHelpers.js',
         'src/services/cytoData.js',
